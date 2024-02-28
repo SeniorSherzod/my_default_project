@@ -39,6 +39,7 @@ dependencies:
   http: ^1.2.1
   url_launcher: ^6.2.4
   shared_preferences: ^2.2.2
+  lottie: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lotty/
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -80,15 +82,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: gilroy
+    - family: SFProFamily
       fonts:
-        - asset: assets/fonts/gilroy/Gilroy-Black.ttf
-        - asset: assets/fonts/gilroy/Gilroy-Bold.ttf
-        - asset: assets/fonts/gilroy/Gilroy-SemiBold.ttf
-        - asset: assets/fonts/gilroy/Gilroy-Light.ttf
-        - asset: assets/fonts/gilroy/Gilroy-Medium.ttf
-        - asset: assets/fonts/gilroy/Gilroy-Regular.ttf
-        - asset: assets/fonts/gilroy/Gilroy-Thin.ttf
+        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Black.otf
+        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Bold.otf
+        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Light.otf
+        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Medium.otf
+        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Thin.otf
+        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Semibold.otf
+        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Regular.otf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

@@ -7,11 +7,11 @@ class StorageRepository{
 
 
   StorageRepository._(){
-    _init();
+    init();
 }
 factory StorageRepository()=>instance;
 
-Future <void> _init() async{
+static Future <void> init() async{
   _preferences = await SharedPreferences.getInstance();
 }
 

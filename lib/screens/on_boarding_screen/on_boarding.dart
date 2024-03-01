@@ -112,8 +112,7 @@ easier and faster.
                 });
                 pageController.jumpToPage(activeIndex);
               } else {
-                Navigator.pushReplacementNamed(context, RouteNames.taskScreen,
-                    arguments: 123);
+                Navigator.pushReplacementNamed(context, RouteNames.taskScreen);
                 StorageRepository.setBool(
                     key: Storagekeys.onBoardingState, value: true);
 

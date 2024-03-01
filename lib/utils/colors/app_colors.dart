@@ -24,6 +24,16 @@ class AppColors {
   static const Color c_FDE598 = Color(0xFFFDE598);
   static const Color main = Color(0xFF24A19C);
   static const Color c_E6EBF3 = Color(0xFFE6EBF3);
+  static const Color icon1 = Color(0xFFE86C62);
+  static const Color icon2 = Color(0xFF3688F2);
+  static const Color icon3 = Color(0xFF73A954);
+  static const Color icon4 = Color(0xFFF09643);
+  static const Color icon5 = Color(0xFFE7A4CF);
+  static const Color icon6 = Color(0xFFF5D155);
+  static const Color icon7 = Color(0xFF516171);
+  static const Color icon8 = Color(0xFF36C5F0);
+  static const Color icon9 = Color(0xFFFF486A);
+  static const Color icon10 = Color(0xFF1B1C1F);
 
 
 }

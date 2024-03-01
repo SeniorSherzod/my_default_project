@@ -3,8 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_default_project/screens/category/category_screen.dart';
 import 'package:my_default_project/screens/inbox/inbox_screen.dart';
 import 'package:my_default_project/screens/project/project_screen.dart';
-import 'package:my_default_project/screens/splash_screen/splash_screen.dart';
-import 'package:my_default_project/screens/tab/home_screens/home_screens.dart';
 import 'package:my_default_project/screens/task_details/task_details_screen.dart';
 import 'package:my_default_project/utils/colors/app_colors.dart';
 import 'package:my_default_project/utils/images/app_images.dart';
@@ -23,8 +21,6 @@ class _BottomNavigatorScreenState extends State<BottomNavigatorScreen> {
   @override
   void initState() {
     _screens = [
-     // const SplashScreen(),
-     // const HomeScreen(),
       const TaskDetailsScreens(),
      const InboxScreen(),
       const CategoryScreen(),
@@ -62,9 +58,9 @@ class _BottomNavigatorScreenState extends State<BottomNavigatorScreen> {
             label: "Inbox",
           ),
           BottomNavigationBarItem(
-            activeIcon: SvgPicture.asset(AppImages.category,color: AppColors.main,),
-            icon:SvgPicture.asset(AppImages.category),
-            label: "Category",
+            activeIcon: SvgPicture.asset(AppImages.date,color: AppColors.main,),
+            icon:SvgPicture.asset(AppImages.date),
+            label: "Upcoming",
           ),
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(AppImages.add,color: AppColors.main,),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:my_default_project/utils/colors/app_colors.dart';
 class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
 
@@ -12,7 +13,15 @@ class _InboxScreenState extends State<InboxScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("inbox"),
+        systemOverlayStyle:const SystemUiOverlayStyle(
+          statusBarColor: AppColors.transparent,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark
+        ),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        backgroundColor: AppColors.main,
+        title:const Text("Inbox"),
       ),
     );
   }

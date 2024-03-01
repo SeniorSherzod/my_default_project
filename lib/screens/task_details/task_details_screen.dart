@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:my_default_project/screens/task_details/diolog/task_title_diolog.dart';
+import 'package:my_default_project/models/task_model/task_model.dart';
 import 'package:my_default_project/utils/colors/app_colors.dart';
 import 'package:my_default_project/utils/extensions/extensions.dart';
 import 'package:my_default_project/utils/images/app_images.dart';
 import 'package:my_default_project/utils/styles/app_text_style.dart';
+
+import 'dialog/task_title_dialog.dart';
 
 class TaskDetailsScreens extends StatefulWidget {
   const TaskDetailsScreens({super.key});
@@ -14,6 +16,16 @@ class TaskDetailsScreens extends StatefulWidget {
 }
 
 class _TaskDetailsScreensState extends State<TaskDetailsScreens> {
+
+   DateTime? dateTime;
+
+  TaskModel taskModel =TaskModel.initialValue;
+  @override
+  void initState() {
+   taskModel.canAddTaskToDatabase();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -22,6 +34,7 @@ class _TaskDetailsScreensState extends State<TaskDetailsScreens> {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             50.getH(),
             ListTile(
@@ -30,7 +43,7 @@ class _TaskDetailsScreensState extends State<TaskDetailsScreens> {
                   style: AppTextStyle.GilroyBold.copyWith(fontSize: 30.w),
                 ),
                 subtitle: Text(
-                  "Best platfhorm for creating to-do list",
+                  "Best platform for creating to-do list",
                   style: AppTextStyle.GilroyLight.copyWith(fontSize: 15.w),
                 ),
                 trailing: IconButton(
@@ -55,7 +68,9 @@ class _TaskDetailsScreensState extends State<TaskDetailsScreens> {
                   Row(
                     children: [
                       IconButton(onPressed: (){
-                      showTaskDialog(context: context);
+                        showTaskDialog(context: context,taskModel: (task){
+                          taskModel=task;
+                        }, taskModelCallback: (TaskModel value) {  });
                       },
                           icon: SvgPicture.asset(AppImages.plus),
                       ),

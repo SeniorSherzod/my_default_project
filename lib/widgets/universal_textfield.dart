@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/colors/app_colors.dart';
 import '../utils/styles/app_text_style.dart';
 class UniversalTextField extends StatelessWidget {
-  const UniversalTextField({
+   UniversalTextField({
     super.key,
     required this.hintText,
     required this.onChanged,
@@ -30,7 +30,7 @@ class UniversalTextField extends StatelessWidget {
   final TextInputType type;
   final String? labelText;
   final bool? isVisible;
-
+  final FocusNode focusNode=FocusNode();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,6 +39,9 @@ class UniversalTextField extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: TextField(
+            maxLines: null,
+            textInputAction: TextInputAction.done,
+            focusNode: focusNode,
             controller: controller,
             keyboardType: keyboardType,
             onChanged: onChanged,

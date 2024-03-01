@@ -1,6 +1,6 @@
 enum TaskStatus{
   processing,
-  dane,
+  done,
   cancelled,
   missed
 }

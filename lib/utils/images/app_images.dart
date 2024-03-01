@@ -14,6 +14,18 @@ class AppImages {
   static const String add = "assets/icons/add.svg";
   static const String clock = "assets/icons/clock.svg";
   static const String flag = "assets/icons/flag.svg";
+  static const String bread = "assets/icons/bread.svg";
+  static const String categoryhome = "assets/icons/category_home.svg";
+  static const String design = "assets/icons/design.svg";
+  static const String health = "assets/icons/health.svg";
+  static const String movie = "assets/icons/movie.svg";
+  static const String music = "assets/icons/music.svg";
+  static const String social = "assets/icons/social.svg";
+  static const String sport = "assets/icons/sport.svg";
+  static const String university = "assets/icons/university.svg";
+  static const String work = "assets/icons/work.svg";
+  static const String back = "assets/icons/back.svg";
+  static const String heart = "assets/icons/heart.svg";
 
 //.jpg
 

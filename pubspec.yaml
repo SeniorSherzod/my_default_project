@@ -44,6 +44,7 @@ dependencies:
   fluttertoast: ^8.2.4
   sqflite: ^2.3.0
   path_provider: ^2.1.2
+  syncfusion_flutter_calendar: ^24.2.8
 
 dev_dependencies:
   flutter_test:

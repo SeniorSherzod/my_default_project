@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:my_default_project/data/local/local_datebase.dart';
 import 'package:my_default_project/models/task_model/task_model.dart';
 import 'package:my_default_project/utils/colors/app_colors.dart';
 import 'package:my_default_project/utils/extensions/extensions.dart';
@@ -28,6 +30,9 @@ class _TaskDetailsScreensState extends State<TaskDetailsScreens> {
 
   @override
   Widget build(BuildContext context) {
+    var now = DateTime.now();
+    var formatter = DateFormat('d MMM yyyy');
+    String formattedDate = formatter.format(now);
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -46,10 +51,10 @@ class _TaskDetailsScreensState extends State<TaskDetailsScreens> {
                   "Best platform for creating to-do list",
                   style: AppTextStyle.GilroyLight.copyWith(fontSize: 15.w),
                 ),
-                trailing: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.settings),
-                )
+                // trailing: IconButton(
+                //   onPressed: () {},
+                //   icon: const Icon(Icons.settings),
+                // )
             ),
             30.getH(),
             Container(
@@ -70,7 +75,9 @@ class _TaskDetailsScreensState extends State<TaskDetailsScreens> {
                       IconButton(onPressed: (){
                         showTaskDialog(context: context,taskModel: (task){
                           taskModel=task;
-                        }, taskModelCallback: (TaskModel value) {  });
+                        }, taskModelCallback: (task) {
+                          LocalDatabase.insertTask(taskModel);
+                        });
                       },
                           icon: SvgPicture.asset(AppImages.plus),
                       ),
@@ -88,7 +95,7 @@ class _TaskDetailsScreensState extends State<TaskDetailsScreens> {
                         style: AppTextStyle.GilroyBold.copyWith(fontSize: 15.w),
                       ),
                       Text(
-                        "Today Mon.20.Jul.2024",
+                        "Today is $formattedDate",
                         style: AppTextStyle.GilroyBold.copyWith(fontSize: 15.w),
                       ),
                     ],

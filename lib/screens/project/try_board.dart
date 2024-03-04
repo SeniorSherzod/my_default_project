@@ -29,7 +29,7 @@ class _TryBoardScreenState extends State<TryBoardScreen> {
         backgroundColor: AppColors.main,
         leading: IconButton(
           onPressed: (){
-            Navigator.pushNamed(context, RouteNames.projectScreen);
+            Navigator.pop(context);
           },
           icon: SvgPicture.asset(AppImages.back,color: AppColors.white,),
         ),

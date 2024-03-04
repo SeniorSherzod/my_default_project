@@ -1,9 +1,6 @@
 import 'package:my_default_project/models/task_model/task_model_constant.dart';
 import 'package:my_default_project/models/task_model/task_status.dart';
-import 'package:my_default_project/models/category_model/category_model.dart'; // Import CategoryModel
-import 'package:my_default_project/utils/images/app_images.dart';
-import 'package:flutter/material.dart';
-
+import 'package:my_default_project/models/category_model/category_model.dart'; // I
 import '../../screens/task_details/dialog/models_category/category_list.dart'; // Import Material for Color
 
 class TaskModel {
@@ -14,9 +11,13 @@ class TaskModel {
   final DateTime deadline;
   final int priority;
   final TaskStatus status;
+  final String icon;
+  final String color;
 
   TaskModel({
     this.id,
+    required this.color,
+    required this.icon,
     required this.description,
     required this.title,
     required this.status,
@@ -33,6 +34,8 @@ class TaskModel {
     DateTime? deadline,
     int? priority,
     TaskStatus? status,
+    String? icon,
+    String? color,
   }) {
     return TaskModel(
       description: description ?? this.description,
@@ -41,6 +44,8 @@ class TaskModel {
       category: category ?? this.category,
       deadline: deadline ?? this.deadline,
       priority: priority ?? this.priority,
+      icon: icon ?? this.icon,
+      color: color ?? this.color,
     );
   }
 
@@ -53,6 +58,8 @@ class TaskModel {
       deadline: DateTime.parse(json[TaskModelConstants.deadline] as String? ?? ""),
       priority: json[TaskModelConstants.priority] as int? ?? 1,
       id: json[TaskModelConstants.id] as int? ?? 0,
+      icon: json[TaskModelConstants.icon] as String? ?? "",
+      color: json[TaskModelConstants.color] as String? ?? "",
     );
   }
 
@@ -64,6 +71,8 @@ class TaskModel {
       TaskModelConstants.category: category.name, // Change to category.name
       TaskModelConstants.deadline: deadline.toString(),
       TaskModelConstants.priority: priority,
+      TaskModelConstants.icon: icon,
+      TaskModelConstants.color: color,
     };
   }
 
@@ -82,6 +91,8 @@ class TaskModel {
     category: categoryModels[0], // Initialize with a default category
     deadline: DateTime.now(),
     priority: 1,
+    color: '',
+    icon: '',
   );
 }
 

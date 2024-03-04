@@ -69,8 +69,7 @@ easier and faster.
           backgroundColor: AppColors.transparent,
           actions: [TextButton(
             onPressed: () {
-              Navigator.pushNamed(context, RouteNames.taskScreen,
-                  arguments: 123);
+              Navigator.pop(context);
               StorageRepository.setBool(
                   key: Storagekeys.onBoardingState, value: true);
             },
@@ -112,7 +111,7 @@ easier and faster.
                 });
                 pageController.jumpToPage(activeIndex);
               } else {
-                Navigator.pushReplacementNamed(context, RouteNames.taskScreen);
+                Navigator.pop(context);
                 StorageRepository.setBool(
                     key: Storagekeys.onBoardingState, value: true);
 

@@ -8,6 +8,7 @@ import 'package:my_default_project/screens/project/try_board.dart';
 import 'package:my_default_project/screens/splash_screen/splash_screen.dart';
 import 'package:my_default_project/screens/tab/home_screens/home_screens.dart';
 import 'package:my_default_project/screens/tab/tab_box/bottmo_navigator.dart';
+import 'package:my_default_project/screens/task_details/add_category.dart';
 import 'package:my_default_project/screens/task_details/task_details_screen.dart';
 //
 class AppRoutes {
@@ -40,6 +41,9 @@ class AppRoutes {
       case RouteNames.instructionScreen:
         return navigate(const InstructionScreen(),);
 
+      case RouteNames.addCategoryScreen:
+        return navigate( AddCategoryScreen(onCategoryAdded: settings.arguments as VoidCallback?,),);
+
       case RouteNames.bottomNavigator:
         return navigate(const BottomNavigatorScreen(),);
 
@@ -71,6 +75,7 @@ class RouteNames {
   static const String inboxScreen = "/inbox_route";
   static const String tryBoardScreen = "/tryBoard_route";
   static const String instructionScreen = "/instruction_route";
+  static const String addCategoryScreen = "/addCategory_route";
   static const String bottomNavigator = "/bottom_route";
 
 }

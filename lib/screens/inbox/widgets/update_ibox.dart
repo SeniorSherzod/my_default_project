@@ -1,58 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:my_default_project/data/local/local_datebase.dart';
-import 'package:my_default_project/screens/task_details/dialog/priority_diolog.dart';
-import 'package:my_default_project/screens/task_details/widgets/showtoast.dart';
-import 'package:my_default_project/utils/colors/app_colors.dart';
 import 'package:my_default_project/utils/extensions/extensions.dart';
-import 'package:my_default_project/utils/images/app_images.dart';
-import 'package:my_default_project/utils/styles/app_text_style.dart';
-import 'package:my_default_project/widgets/universal_textfield.dart';
 import '../../../models/task_model/task_model.dart';
-import 'category_diolog.dart';
+import '../../../utils/colors/app_colors.dart';
+import '../../../utils/images/app_images.dart';
+import '../../../utils/styles/app_text_style.dart';
+import '../../../widgets/universal_textfield.dart';
+import '../../task_details/dialog/category_diolog.dart';
+import '../../task_details/dialog/priority_diolog.dart';
+import '../../task_details/widgets/showtoast.dart';
 
-showTaskDialog({
+updateTaskDialog({
   required BuildContext context,
-  required ValueChanged<TaskModel> taskModelCallback,
-  required Null Function(dynamic task) taskModel,
+  required TaskModel task,
+  required ValueChanged<TaskModel> taskModelChanged,
 }) {
-  final TextEditingController taskController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  //
-  int priority;
-  String category = "home"; // Initialize category variable here
-  TaskModel taskModel = TaskModel.initialValue;
+  TaskModel taskModel = task;
+
+  final TextEditingController titleController =
+      TextEditingController(text: taskModel.title);
+  final TextEditingController descriptionController =
+      TextEditingController(text: taskModel.description);
 
   DateTime? dateTime;
   TimeOfDay? timeOfDay;
+
+  // int category = 0;
+  int priority = 1;
+  String category = "home"; // Initialize category variable here
+
   showModalBottomSheet(
     isScrollControlled: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(builder: (context, setState) {
         return Padding(
-          padding:  EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               30.getH(),
               UniversalTextField(
-                hintText: "eg.enter task",
+                hintText: "eg.enter changed title",
                 onChanged: (v) {
                   setState(() {
                     taskModel = taskModel.copyWith(title: v);
                   });
                 },
                 onSubmit: (value) {},
-                controller: taskController,
+                controller: titleController,
                 errorText: "Enter task",
                 type: TextInputType.name,
                 isVisible: true,
               ),
               15.getH(),
               UniversalTextField(
-                hintText: "eg.enter description",
+                hintText: "eg.enter changed description",
                 onChanged: (value) {
                   setState(() {
                     taskModel = taskModel.copyWith(description: value);
@@ -72,17 +77,17 @@ showTaskDialog({
                       onPressed: () async {
                         final selectedCategory = await showCategory(
                           context: context,
-                          category: category,
+                          category: category as String,
                         );
                         if (selectedCategory != null) {
                           setState(() {
-                            category = selectedCategory; // Update the category variable
+                            category =
+                                selectedCategory; // Update the category variable
                           });
                         }
                       },
                       icon: SvgPicture.asset(AppImages.task),
                     ),
-
                     IconButton(
                       onPressed: () async {
                         dateTime = await showDatePicker(
@@ -95,8 +100,9 @@ showTaskDialog({
                           currentDate: DateTime.now(),
                         );
                         if (dateTime != null) {
-                          setState((){
-                            taskModelCallback(taskModel.copyWith(deadline: dateTime));
+                          setState(() {
+                            taskModelChanged(
+                                taskModel.copyWith(deadline: dateTime));
                           });
                         }
                       },
@@ -110,7 +116,8 @@ showTaskDialog({
                           initialTime: const TimeOfDay(hour: 08, minute: 00),
                           builder: (BuildContext context, Widget? child) {
                             return MediaQuery(
-                              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+                              data: MediaQuery.of(context)
+                                  .copyWith(alwaysUse24HourFormat: true),
                               child: child!,
                             );
                           },
@@ -129,8 +136,6 @@ showTaskDialog({
                       },
                       icon: SvgPicture.asset(AppImages.clock),
                     ),
-
-
                     IconButton(
                       onPressed: () {
                         showPriority(
@@ -138,12 +143,10 @@ showTaskDialog({
                           context: context,
                           priority: (p) {
                             setState(() {
-                              print(p);
+                              priority = p;
                               taskModel = taskModel.copyWith(priority: p);
-                              print(taskModel.priority);
                               if (taskModel.canAddTaskToDatabase()) {
                                 showToastMessage("seccess");
-                                LocalDatabase.insertTask(taskModel);
                                 Navigator.pop(context);
                               } else {
                                 showErrorToastMessage("Error");
@@ -155,7 +158,6 @@ showTaskDialog({
                       },
                       icon: SvgPicture.asset(AppImages.flag),
                     ),
-
                   ],
                 ),
               ),
@@ -166,7 +168,8 @@ showTaskDialog({
                     SizedBox(width: 30.w),
                     Text(
                       "${taskModel.deadline.hour} :${taskModel.deadline.minute} minute",
-                      style: AppTextStyle.GilroyMedium.copyWith(color: AppColors.black),
+                      style: AppTextStyle.GilroyMedium.copyWith(
+                          color: AppColors.black),
                     ),
                   ],
                 ),
@@ -185,7 +188,8 @@ showTaskDialog({
                     SizedBox(width: 30.w),
                     Text(
                       "${taskModel.category.name} :$category}",
-                      style: AppTextStyle.GilroyMedium.copyWith(color: AppColors.black),
+                      style: AppTextStyle.GilroyMedium.copyWith(
+                          color: AppColors.black),
                     ),
                   ],
                 ),
@@ -196,7 +200,8 @@ showTaskDialog({
                     SizedBox(width: 30.w),
                     Text(
                       "${taskModel.priority} :${taskModel.priority} ${taskModel.title} ${taskModel.description} ",
-                      style: AppTextStyle.GilroyMedium.copyWith(color: AppColors.black),
+                      style: AppTextStyle.GilroyMedium.copyWith(
+                          color: AppColors.black),
                     ),
                   ],
                 ),
@@ -207,4 +212,3 @@ showTaskDialog({
     },
   );
 }
-

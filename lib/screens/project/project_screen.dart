@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,26 +28,32 @@ class _ProjectScreenState extends State<ProjectScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.main,
         title: const Text("Project"),
+        // leading: IconButton(
+        //   onPressed: (){
+        //     Navigator.pop(context);
+        //   },
+        //   icon: SvgPicture.asset(AppImages.back,color: AppColors.white,),
+        // ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             ListTile(
-              leading: Icon(Icons.note_add_outlined),
+              leading:const Icon(Icons.note_add_outlined),
               title: Padding(
                 padding:  EdgeInsets.only(right: 170.w),
                 child: TextButton(
                   onPressed: (){
                     Navigator.pushNamed(context, RouteNames.tryBoardScreen);
                   },
-                  child: Text("Try board",style: AppTextStyle.GilroyLight),
+                  child:const Text("Try board",style: AppTextStyle.GilroyLight),
                 ),
               ),
               trailing:  SvgPicture.asset(AppImages.heart)
             ),
             ListTile(
-                leading: Icon(Icons.message),
+                leading:const Icon(Icons.message),
                 title: Padding(
                   padding:  EdgeInsets.only(right: 110.w),
                   child: TextButton(
@@ -56,7 +61,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                       Navigator.pushNamed(context, RouteNames.instructionScreen);
 
                     },
-                    child: Text("Instractions for use",style: AppTextStyle.GilroyLight,),
+                    child:const Text("Instructions for use",style: AppTextStyle.GilroyLight,),
                   ),
                 ),
             )

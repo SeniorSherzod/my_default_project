@@ -7,4 +7,6 @@ class TaskModelConstants {
   static const String status = "status";
   static const String deadline = "deadline";
   static const String id = "_id";
+  static const String icon = "icon";
+  static const String color = "color";
 }

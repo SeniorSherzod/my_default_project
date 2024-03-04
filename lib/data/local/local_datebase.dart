@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_default_project/models/category_model/category_constants.dart';
+import 'package:my_default_project/utils/colors/app_colors.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+import '../../models/category_model/category_model.dart';
 import '../../models/task_model/task_model.dart';
 import '../../models/task_model/task_model_constant.dart';
 
@@ -123,5 +125,53 @@ class LocalDatabase {
       whereArgs: ["$query%"],
     );
     return json.map((e) => TaskModel.fromJson(e)).toList();
+  }
+  static Future<CategoryModel> insertCategory(
+      CategoryModel categoryModel) async {
+    debugPrint("INITIAL ID:${categoryModel.id}");
+    final db = await databaseInstance.database;
+    int savedCategoryID = await db.insert(
+        CategoryModelConstants.tableName, categoryModel.toJson());
+    debugPrint("SAVED ID:$savedCategoryID");
+    return categoryModel.copyWith(id: savedCategoryID);
+  }
+
+  static Future<List<CategoryModel>> getAllCategories() async {
+    final db = await databaseInstance.database;
+    String orderBy = "${CategoryModelConstants.id} DESC"; //"_id DESC"
+    List json =
+    await db.query(CategoryModelConstants.tableName, orderBy: orderBy);
+    return json.map((e) => CategoryModel.fromJson(e)).toList();
+  }
+
+  static Future<CategoryModel> getCategoryByName(String name) async {
+    final db = await databaseInstance.database;
+    String orderBy = "${CategoryModelConstants.id} DESC"; //"_id DESC"
+    List json = await db.query(
+      CategoryModelConstants.tableName,
+      orderBy: orderBy,
+      where: "${CategoryModelConstants.name} = ?",
+      whereArgs: [name],
+    );
+    return json.map((e) => CategoryModel.fromJson(e)).toList()[0];
+  }
+
+  static Future<CategoryModel> getCategoryById(int id) async {
+    final db = await databaseInstance.database;
+    String orderBy = "${CategoryModelConstants.id} DESC"; //"_id DESC"
+    List json = await db.query(
+      CategoryModelConstants.tableName,
+      orderBy: orderBy,
+      where: "${CategoryModelConstants.id} = ?",
+      whereArgs: [id],
+    );
+    return json.map((e) => CategoryModel.fromJson(e)).toList()[0];
+  }
+
+  void function() {
+    //000000 => Color(0xFF000000)
+    var color = AppColors.black;
+    Color(int.parse("000000"));
+    color.value.toString();
   }
 }

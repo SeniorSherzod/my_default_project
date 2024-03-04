@@ -103,6 +103,7 @@ showPriority({
                     ),
                     GestureDetector(
                       onTap: () {
+                        setState((){});
                         priority.call(p); // Pass p directly to the callback
                         Navigator.pop(context);
                       },

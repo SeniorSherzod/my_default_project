@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:my_default_project/data/local/local_datebase.dart';
+import 'package:my_default_project/screens/named_route.dart';
 import 'package:my_default_project/utils/extensions/extensions.dart';
+import '../../../models/category_model/category_model.dart';
 import '../../../utils/colors/app_colors.dart';
 import '../../../utils/images/app_images.dart';
 import 'models_category/category_list.dart';
@@ -10,7 +13,8 @@ Future<String?> showCategory({
   required String category,
 }) async {
   String? selectedCategory = category;
-
+  List <CategoryModel> categoryModels= await LocalDatabase.getAllCategories();
+  // if(!context.mounted)
   await showDialog(
     context: context,
     builder: (context) => StatefulBuilder(builder: (context, setState) {
@@ -44,7 +48,7 @@ Future<String?> showCategory({
               Expanded(
                 child: GridView.count(
                   padding: EdgeInsets.all(24.w),
-                  crossAxisCount: 4,
+                  crossAxisCount: 3,
                   crossAxisSpacing: 15.w,
                   mainAxisSpacing: 15.h,
                   children: List.generate(
@@ -54,7 +58,10 @@ Future<String?> showCategory({
                         // Last item, render the "Add" button
                         return GestureDetector(
                           onTap: () {
-                            // Add your "Add" functionality here
+                            Navigator.pushNamed(context, RouteNames.addCategoryScreen, arguments:() async {categoryModels= await LocalDatabase.getAllCategories();
+                            setState((){});
+                            });
+
                           },
                           child: Container(
                             width: 30.w,

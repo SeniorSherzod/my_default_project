@@ -43,8 +43,7 @@ class GlobalButton extends StatelessWidget {
         ),
         onPressed: onTap,
         child: Text(title,
-            style: AppTextStyle.GilroyBold
-                .copyWith(fontSize: fontSize, color: colorText)),
+            style: Theme.of(context).textTheme.bodyLarge,),
       ),
     );
   }

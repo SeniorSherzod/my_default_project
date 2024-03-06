@@ -45,25 +45,25 @@ class _BottomNavigatorScreenState extends State<BottomNavigatorScreen> {
         type: BottomNavigationBarType.fixed,
         selectedFontSize: 16,
         unselectedFontSize: 14,
-        backgroundColor: AppColors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         items:  [
           BottomNavigationBarItem(
-            activeIcon: SvgPicture.asset(AppImages.home,color: AppColors.main,),
+            activeIcon: SvgPicture.asset(AppImages.home,color: Theme.of(context).colorScheme.onSurface,),
             icon:SvgPicture.asset(AppImages.home),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            activeIcon: SvgPicture.asset(AppImages.task,color: AppColors.main,),
+            activeIcon: SvgPicture.asset(AppImages.task,color: Theme.of(context).colorScheme.onSurface,),
             icon:SvgPicture.asset(AppImages.task),
             label: "Inbox",
           ),
           BottomNavigationBarItem(
-            activeIcon: SvgPicture.asset(AppImages.date,color: AppColors.main,),
+            activeIcon: SvgPicture.asset(AppImages.date,color: Theme.of(context).colorScheme.onSurface,),
             icon:SvgPicture.asset(AppImages.date),
             label: "Upcoming",
           ),
           BottomNavigationBarItem(
-            activeIcon: SvgPicture.asset(AppImages.add,color: AppColors.main,),
+            activeIcon: SvgPicture.asset(AppImages.add,color: Theme.of(context).colorScheme.onSurface,),
             icon:SvgPicture.asset(AppImages.add),
             label: "Project",
           ),

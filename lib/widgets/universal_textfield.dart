@@ -47,12 +47,11 @@ class UniversalTextField extends StatelessWidget {
             onChanged: onChanged,
             obscureText: !isVisible!,
             decoration: InputDecoration(
-              fillColor: AppColors.white,
+              fillColor: Theme.of(context).cardColor,
               filled: true,
               hintText: hintText,
               suffix: prefix,
-              helperStyle: AppTextStyle.GilroyMedium.copyWith
-                (color: AppColors.main, fontSize: 12),
+              helperStyle: Theme.of(context).textTheme.bodyLarge,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
                     width: 1,

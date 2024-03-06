@@ -52,7 +52,6 @@ class _InboxScreenState extends State<InboxScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.main,
         elevation: 0,//0xFF000000
         title: const Text("In Box"),
       ),
@@ -70,7 +69,7 @@ class _InboxScreenState extends State<InboxScreen> {
               child: TextField(
                 onChanged: _searchQuery,
                 decoration: InputDecoration(
-                  fillColor: AppColors.white,
+                  fillColor: Theme.of(context).cardColor,
                   filled: true,
                   hintText: "Search your to do here",
                   helperStyle: AppTextStyle.GilroyMedium.copyWith

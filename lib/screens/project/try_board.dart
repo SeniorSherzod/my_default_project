@@ -19,14 +19,8 @@ class _TryBoardScreenState extends State<TryBoardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: AppColors.transparent,
-            statusBarIconBrightness: Brightness.light,
-            statusBarBrightness: Brightness.dark
-        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.main,
         leading: IconButton(
           onPressed: (){
             Navigator.pop(context);
@@ -42,7 +36,7 @@ class _TryBoardScreenState extends State<TryBoardScreen> {
             Row(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("In progress",style: AppTextStyle.GilroyMedium.copyWith(fontSize: 20),),
+                Text("In progress",style:Theme.of(context).textTheme.headlineLarge,),
                 IconButton(
                   onPressed: (){
                     // Navigator.pushNamed(context, RouteNames.projectScreen);

@@ -20,14 +20,8 @@ class _InstructionScreenState extends State<InstructionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: AppColors.transparent,
-            statusBarIconBrightness: Brightness.light,
-            statusBarBrightness: Brightness.dark
-        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.main,
         leading: IconButton(
           onPressed: (){
             Navigator.pop(context);
@@ -44,7 +38,7 @@ class _InstructionScreenState extends State<InstructionScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Tips and Tricks   4",style: AppTextStyle.GilroyMedium.copyWith(fontSize: 30.w),),
+                Text("Tips and Tricks   4",style: Theme.of(context).textTheme.headlineLarge,),
                 IconButton(
                     onPressed: (){
                       // Navigator.pushNamed(context, RouteNames.projectScreen);
@@ -53,10 +47,10 @@ class _InstructionScreenState extends State<InstructionScreen> {
                 ),
               ],
             ),
-            Text("Use click create task",style: AppTextStyle.GilroyLight.copyWith(fontSize: 25.w)),
-            Text("Start own project!",style: AppTextStyle.GilroyLight.copyWith(fontSize: 25.w)),
-            Text("Organise these task",style: AppTextStyle.GilroyLight.copyWith(fontSize: 25.w)),
-            Text("Scechudule task",style: AppTextStyle.GilroyLight.copyWith(fontSize: 25.w)),
+            Text("Use click create task",style: Theme.of(context).textTheme.headlineLarge,),
+            Text("Start own project!",style: Theme.of(context).textTheme.headlineLarge,),
+            Text("Organise these task",style: Theme.of(context).textTheme.headlineLarge,),
+            Text("Scechudule task",style: Theme.of(context).textTheme.headlineLarge,),
           ],
         ),
       ),

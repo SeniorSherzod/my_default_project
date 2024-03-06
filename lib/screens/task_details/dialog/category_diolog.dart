@@ -30,12 +30,7 @@ Future<String?> showCategory({
               ),
               Text(
                 "choose category",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.w,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: AppImages.flag,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(
                 height: 10.h,
@@ -43,7 +38,7 @@ Future<String?> showCategory({
               Container(
                 height: 2.h,
                 width: double.infinity,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
               ),
               Expanded(
                 child: GridView.count(
@@ -90,8 +85,8 @@ Future<String?> showCategory({
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular(4.w)),
                               color: selectedCategory == category.name
-                                  ? AppColors.main
-                                  : const Color(0xFF272727),
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).cardColor,
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -100,12 +95,7 @@ Future<String?> showCategory({
                                 SvgPicture.asset(category.iconPath),
                                 Text(
                                   category.name,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: AppImages.flag,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16.w,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 )
                               ],
                             ),
@@ -131,12 +121,7 @@ Future<String?> showCategory({
                         child: Center(
                           child: Text(
                             "Cancel",
-                            style: TextStyle(
-                              color: AppColors.main,
-                              fontSize: 16.w,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: AppImages.flag,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),
@@ -155,12 +140,7 @@ Future<String?> showCategory({
                         child: Center(
                           child: Text(
                             "Save",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.w,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: AppImages.flag,
-                            ),
+                            style:Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),

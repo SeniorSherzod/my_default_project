@@ -10,6 +10,7 @@ import 'package:my_default_project/screens/tab/home_screens/home_screens.dart';
 import 'package:my_default_project/screens/tab/tab_box/bottmo_navigator.dart';
 import 'package:my_default_project/screens/task_details/add_category.dart';
 import 'package:my_default_project/screens/task_details/task_details_screen.dart';
+import 'package:my_default_project/screens/task_details/widgets/slider_avatar.dart';
 //
 class AppRoutes {
   static Route  generateRoute(RouteSettings settings) {
@@ -40,6 +41,8 @@ class AppRoutes {
 
       case RouteNames.instructionScreen:
         return navigate(const InstructionScreen(),);
+      // case RouteNames.sliderScreen:
+      //   return navigate(SliderAvatar(onItemClick: o),);
 
       case RouteNames.addCategoryScreen:
         return navigate( AddCategoryScreen(onCategoryAdded: settings.arguments as VoidCallback?,),);
@@ -76,6 +79,7 @@ class RouteNames {
   static const String tryBoardScreen = "/tryBoard_route";
   static const String instructionScreen = "/instruction_route";
   static const String addCategoryScreen = "/addCategory_route";
+  static const String sliderScreen = "/slider_route";
   static const String bottomNavigator = "/bottom_route";
 
 }

@@ -15,12 +15,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: AppColors.transparent,
-              statusBarIconBrightness: Brightness.light,
-              statusBarBrightness: Brightness.dark),
           automaticallyImplyLeading: false,
-          backgroundColor: AppColors.main,
           centerTitle: true,
           title: const Text("Upcaming"),
         ),

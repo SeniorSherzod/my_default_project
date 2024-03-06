@@ -49,7 +49,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.main,
         title: Text("Add Category"),
       ),
       body: Padding(
@@ -61,11 +60,10 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                categoryName = v;
                 },
               decoration: InputDecoration(
-                fillColor: AppColors.white,
+                fillColor: Theme.of(context).cardColor,
                 filled: true,
                 hintText: "Enter new category name here",
-                helperStyle: AppTextStyle.GilroyMedium.copyWith
-                  (color: AppColors.main, fontSize: 12),
+                helperStyle: Theme.of(context).textTheme.bodyMedium,
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
                       width: 1,
@@ -113,8 +111,8 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                       icon: SvgPicture.asset(
                         icons[index] as String,
                         color: selectedIconIndex == index
-                            ? Colors.green
-                            : AppColors.black,
+                            ?  Theme.of(context).colorScheme.error
+                            : Theme.of(context).colorScheme.primary,
                         width: 42,
                         height: 42,
                       ),

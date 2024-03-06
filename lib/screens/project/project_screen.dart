@@ -20,13 +20,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle:const SystemUiOverlayStyle(
-            statusBarColor: AppColors.transparent,
-            statusBarIconBrightness: Brightness.light,
-            statusBarBrightness: Brightness.dark
-        ),
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.main,
         title: const Text("Project"),
         // leading: IconButton(
         //   onPressed: (){
@@ -47,7 +41,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                   onPressed: (){
                     Navigator.pushNamed(context, RouteNames.tryBoardScreen);
                   },
-                  child:const Text("Try board",style: AppTextStyle.GilroyLight),
+                  child:Text("Try board",style: Theme.of(context).textTheme.bodyMedium),
                 ),
               ),
               trailing:  SvgPicture.asset(AppImages.heart)
@@ -61,7 +55,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                       Navigator.pushNamed(context, RouteNames.instructionScreen);
 
                     },
-                    child:const Text("Instructions for use",style: AppTextStyle.GilroyLight,),
+                    child:Text("Instructions for use",style: Theme.of(context).textTheme.bodyMedium),
                   ),
                 ),
             )

@@ -73,7 +73,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/lotty/
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -88,15 +87,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: SFProFamily
+    - family: gilroy
       fonts:
-        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Black.otf
-        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Bold.otf
-        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Light.otf
-        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Medium.otf
-        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Thin.otf
-        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Semibold.otf
-        - asset: assets/fonts/SFProFamily/SF-Pro-Display-Regular.otf
+        - asset: assets/fonts/gilroy/Gilroy-Black.ttf
+        - asset: assets/fonts/gilroy/Gilroy-Bold.ttf
+        - asset: assets/fonts/gilroy/Gilroy-SemiBold.ttf
+        - asset: assets/fonts/gilroy/Gilroy-Light.ttf
+        - asset: assets/fonts/gilroy/Gilroy-Medium.ttf
+        - asset: assets/fonts/gilroy/Gilroy-Regular.ttf
+        - asset: assets/fonts/gilroy/Gilroy-Thin.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

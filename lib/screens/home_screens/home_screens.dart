@@ -6,7 +6,7 @@ import '../../../utils/colors/app_colors.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/images/app_images.dart';
 import '../../../utils/styles/app_text_style.dart';
-import '../../named_route.dart';
+import '../named_route.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

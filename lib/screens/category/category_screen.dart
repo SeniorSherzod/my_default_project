@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import '../../utils/colors/app_colors.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});

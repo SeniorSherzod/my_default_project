@@ -3,7 +3,6 @@ import 'package:my_default_project/models/category_model/category_constants.dart
 import 'package:my_default_project/utils/colors/app_colors.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
 import '../../models/category_model/category_model.dart';
 import '../../models/task_model/task_model.dart';
 import '../../models/task_model/task_model_constant.dart';

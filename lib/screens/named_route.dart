@@ -6,11 +6,11 @@ import 'package:my_default_project/screens/project/instruction_screen.dart';
 import 'package:my_default_project/screens/project/project_screen.dart';
 import 'package:my_default_project/screens/project/try_board.dart';
 import 'package:my_default_project/screens/splash_screen/splash_screen.dart';
-import 'package:my_default_project/screens/tab/home_screens/home_screens.dart';
 import 'package:my_default_project/screens/tab/tab_box/bottmo_navigator.dart';
 import 'package:my_default_project/screens/task_details/add_category.dart';
 import 'package:my_default_project/screens/task_details/task_details_screen.dart';
-import 'package:my_default_project/screens/task_details/widgets/slider_avatar.dart';
+
+import 'home_screens/home_screens.dart';
 //
 class AppRoutes {
   static Route  generateRoute(RouteSettings settings) {

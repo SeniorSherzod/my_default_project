@@ -1,29 +1,26 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:my_default_project/screens/demo_screens/demo_screens.dart';
+import 'package:my_default_project/screens/animation_screens/fifth_screen.dart';
+import 'package:my_default_project/screens/animation_screens/first_screen.dart';
+import 'package:my_default_project/screens/animation_screens/flutter_logoblack.dart';
+import 'package:my_default_project/screens/animation_screens/four_circlecolor_screen.dart';
 
-import 'data/local/storage_repository.dart';
+void main() {
+  runApp(const MyApp());
+}
 
-class MyHttpOverrides extends HttpOverrides {
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host,
-          int port) => true;
-  }
-
-  Future <void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    StorageRepository();
-    HttpOverrides.global = new MyHttpOverrides();
-    runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: false),
-        home: DemoScreens(),
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Animation',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      // onGenerateRoute: MyRouter.generateRoute,
+      home:FirstScreen(),
     );
   }
-
 }

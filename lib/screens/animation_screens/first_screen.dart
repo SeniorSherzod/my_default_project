@@ -24,7 +24,7 @@ class _FirstScreenState extends State<FirstScreen>
       duration: const Duration(seconds: 20),
     );
 
-    animation = Tween<double>(begin: 0, end: 10 * pi).animate(
+    animation = Tween<double>(begin: 0, end: 15 * pi).animate(
       CurvedAnimation(
         parent: animationController,
         curve: Curves.linear,

@@ -44,11 +44,11 @@ class CountriesScreen extends StatelessWidget {
                           context.watch<CountriesViewModel>().countries[index];
                       return ListTile(
                         title: Text(country.officialName),
-                        leading: Text(country.flag,style: AppTextStyle.GilroyMedium.copyWith(fontSize: 30),),
+                        leading: Text(country.flag,style: AppTextStyle.GilroyMedium.copyWith(fontSize: 40),),
                         subtitle:Text(country.region),
                         trailing: Column(
                           children: [
-                            Text(country.population.toString()),
+                            Text("Population ${country.population.toString()}"),
                           ],
                         ),
 

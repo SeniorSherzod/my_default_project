@@ -1,65 +1,65 @@
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class StorageRepository{
+class StorageRepository {
+  static final StorageRepository instance = StorageRepository._();
+  static SharedPreferences? _preference;
 
-  static  SharedPreferences? _preferences;
-  static final StorageRepository instance =StorageRepository();
+  StorageRepository._();
 
+  factory StorageRepository() => instance;
 
-  StorageRepository._(){
-    _init();
-}
-factory StorageRepository()=>instance;
+  static Future<void> init() async {
+    _preference = await SharedPreferences.getInstance();
+  }
 
-Future <void> _init() async{
-  _preferences = await SharedPreferences.getInstance();
-}
-
-static Future<void> setInt({
+  static Future<void> setInt({
     required String key,
-  required int value,
-}) async {
-  if (_preferences !=null){
-    _preferences!.setInt(key, value);
+    required int value,
+  }) async {
+    if (_preference != null) {
+      debugPrint("SAVING INT:$value");
+      _preference!.setInt(key, value);
+    }
   }
-}
-static getInt({
-    required String key
-}) async {
-  if(_preferences != null){
-    return _preferences!.getInt(key) ?? 0;
+
+  static int getInt({required String key}) {
+    if (_preference != null) {
+      return _preference!.getInt(key) ?? 0;
+    }
+    return 0;
   }
-  return 0;
-}
+
   static Future<void> setString({
     required String key,
     required String value,
   }) async {
-    if (_preferences !=null){
-      _preferences!.setString(key, value);
+    if (_preference != null) {
+      debugPrint("SAVING STRING:$value");
+      _preference!.setString(key, value);
     }
   }
-  static getString({
-    required String key
-  }) async {
-    if(_preferences != null){
-      return _preferences!.getString(key) ?? "";
+
+  static String getString({required String key}) {
+    if (_preference != null) {
+      return _preference!.getString(key) ?? "";
     }
     return "";
   }
+
   static Future<void> setBool({
     required String key,
     required bool value,
   }) async {
-    if (_preferences !=null){
-      _preferences!.setBool(key, value);
+    if (_preference != null) {
+      debugPrint("SAVING BOOL:$value");
+      _preference!.setBool(key, value);
     }
   }
-  static bool getBool({
-    required String key
-  })  {
-    if(_preferences != null){
-      return _preferences!.getBool(key) ?? false;
+
+  static bool getBool({required String key}) {
+    if (_preference != null) {
+      return _preference!.getBool(key) ?? false;
     }
     return false;
   }
@@ -68,15 +68,15 @@ static getInt({
     required String key,
     required double value,
   }) async {
-    if (_preferences !=null){
-      _preferences!.setDouble(key, value);
+    if (_preference != null) {
+      debugPrint("SAVING DOUBLE:$value");
+      _preference!.setDouble(key, value);
     }
   }
-  static double  getDouble({
-    required String key
-  })  {
-    if(_preferences != null){
-      return _preferences!.getDouble(key) ?? 0.0;
+
+  static double getDouble({required String key}) {
+    if (_preference != null) {
+      return _preference!.getDouble(key) ?? 0.0;
     }
     return 0.0;
   }
@@ -85,17 +85,16 @@ static getInt({
     required String key,
     required List<String> values,
   }) async {
-    if (_preferences !=null){
-      _preferences!.setStringList(key, values);
+    if (_preference != null) {
+      debugPrint("SAVING LIST:$values");
+      _preference!.setStringList(key, values);
     }
   }
-  static List<String>  getListString({
-    required String key
-  })  {
-    if(_preferences != null){
-      return _preferences!.getStringList(key) ?? [];
+
+  static List<String> getStringList({required String key}) {
+    if (_preference != null) {
+      return _preference!.getStringList(key) ?? [];
     }
     return [];
   }
-
 }

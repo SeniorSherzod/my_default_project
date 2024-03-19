@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+String imageUrl =
+    "https://purepng.com/public/uploads/large/purepng.com-booksbookillustratedwrittenprintedliteratureclipart-1421526451707uyace.png";
 
-class DemoScreens extends StatefulWidget {
-  const DemoScreens({super.key});
+class LibraryScreens extends StatefulWidget {
+  const LibraryScreens({super.key});
 
   @override
-  State<DemoScreens> createState() => _DemoScreensState();
+  State<LibraryScreens> createState() => _LibraryScreensState();
 }
 
-class _DemoScreensState extends State<DemoScreens> {
+class _LibraryScreensState extends State<LibraryScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      body: Center(
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          placeholder: (context, url) =>
+          const Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+          width: 300,
+          height: 300,
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }

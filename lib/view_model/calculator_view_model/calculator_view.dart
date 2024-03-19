@@ -12,8 +12,6 @@ class CalculatorViewModel extends ChangeNotifier{
   double resultFontSize = 48.0;
 
   buttonPressed(String buttonText) {
-    print(buttonText);
-    result = buttonText;
     notifyListeners();
     String doesContainDecimal(dynamic result) {
       if (result.toString().contains('.')) {

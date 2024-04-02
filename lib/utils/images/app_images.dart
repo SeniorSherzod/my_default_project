@@ -9,6 +9,9 @@ class AppImages {
   static const String basket = "assets/icons/basket.svg";
 
 //.jpg
+  static const String home = "assets/icons/home.jpg";
+  static const String work = "assets/icons/work.jpg";
+  static const String current = "assets/icons/current.jpg";
 
 //.gif
 }

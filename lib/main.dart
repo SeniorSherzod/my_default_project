@@ -1,29 +1,35 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_default_project/data/cubits/countries/countries_cubit.dart';
 import 'package:my_default_project/screens/demo_screens/demo_screens.dart';
+import 'package:my_default_project/screens/security_screen/password_screen.dart';
 
-import 'data/local/storage_repository.dart';
+import 'data/cubits/digits/digits_button.dart';
 
-class MyHttpOverrides extends HttpOverrides {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => CountriesCubit()..fetchCountries()),
+        // BlocProvider(create: (_) => PasswordCubit()),
+        // BlocProvider(create: (_) => PinCubit()..D()),
+      ],
+      child: MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host,
-          int port) => true;
-  }
-
-  Future <void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    StorageRepository();
-    HttpOverrides.global = new MyHttpOverrides();
-    runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: false),
-        home: DemoScreens(),
-      ),
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: false),
+      home: SecurityScreen(),
     );
   }
-
 }

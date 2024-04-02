@@ -1,51 +1,49 @@
 import 'dart:convert';
-import 'package:http/http.dart'as http;
-import '../../utils/constants/app_constants.dart';
-import '../models/categories/categories.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+
+import '../models/countries_model.dart';
 import '../models/network_responce.dart';
-import '../models/product/product.dart';
 
 class ApiProvider {
-  static Future<NetworkResponse> fetchProductModel(int id) async {
-    NetworkResponse networkResponse = NetworkResponse();
+  static Future<NetworkResponse> getCountries() async {
     try {
       http.Response response = await http
-          .get(Uri.parse("${AppConstants.singleUserApi}$id"));
+          .get(Uri.parse("https://all-countries.free.mockoapp.net/countries"));
 
-      if (response.statusCode == 200) {
-        networkResponse.data = (jsonDecode(response.body) as List?)
-            ?.map((e) => ProductModel.fromJson(e))
-            .toList() ??
-            [];
+      if (response.statusCode == HttpStatus.ok) {
+        dynamic responseBody = jsonDecode(response.body);
+        if (responseBody['data'] != null &&
+            responseBody['data']['countries'] != null) {
+          List<dynamic> countriesData = responseBody['data']['countries'];
+          print(countriesData[0]);
+          // Map each country data to CountryModel object
+          List<CountryModel> countries = countriesData
+              .map((countryData) {
+
+            return CountryModel.fromJson(countryData);
+          },)
+              .toList();
+
+          print(countries);
+
+          return NetworkResponse(data: countries);
+        } else {
+          print(response.statusCode.toString());
+          return NetworkResponse(
+            errorText: "Data or countries not found in response",
+          );
+        }
       } else {
-        networkResponse.errorText = "Internal error";
+        print(response.statusCode.toString());
+        return NetworkResponse(
+
+          errorText: "HTTP Status Code: ${response.statusCode}",
+        );
       }
     } catch (error) {
-      networkResponse.errorText = error.toString();
+      print(error.toString());
+      return NetworkResponse(errorText: error.toString());
     }
-
-    return networkResponse;
   }
-  static Future<NetworkResponse> fetchCategoriesModel() async {
-    NetworkResponse networkResponse = NetworkResponse();
-    try {
-      http.Response response = await http
-          .get(Uri.parse(AppConstants.baseUserApi));
-
-      if (response.statusCode == 200) {
-        networkResponse.data = (jsonDecode(response.body) as List?)
-            ?.map((e) => CategoriesModel.fromJson(e))
-            .toList() ??
-            [];
-      } else {
-        networkResponse.errorText = "Internal error";
-      }
-    } catch (error) {
-      networkResponse.errorText = error.toString();
-    }
-
-    return networkResponse;
-  }
-
-
 }

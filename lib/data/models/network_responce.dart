@@ -2,7 +2,7 @@ class NetworkResponse {
   String errorText;
   dynamic data;
 
-  NetworkResponse({
+  NetworkResponse( {
     this.errorText = "",
     this.data,
   });

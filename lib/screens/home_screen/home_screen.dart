@@ -8,10 +8,11 @@ import 'package:my_default_project/utils/colors/app_colors.dart';
 import 'package:my_default_project/utils/images/app_images.dart';
 import 'package:my_default_project/data/models/note_model.dart';
 import '../editor_screen/editor_screen.dart';
-import '../sample_screen/sample_screen.dart'; // Import the AddScreen
+import '../sample_screen/sample_screen.dart';
+import '../search/search_screen.dart'; // Import the AddScreen
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,20 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.black,
       appBar: AppBar(
         backgroundColor: AppColors.black,
-        title: Text('Notes'),
+        title:const Text('Notes'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () async {
+              // Navigate to the search screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchScreen()),
+              );
+            },
+          ),
+
+        ],
       ),
       body: BlocBuilder<NoteBloc, NoteState>(
         builder: (context, state) {
@@ -63,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                             );
                           },
                           trailing: IconButton(
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             onPressed: () {
                               BlocProvider.of<NoteBloc>(context)
                                   .add(DeleteNote(id: state.notes[index].id!));
@@ -80,7 +94,7 @@ class HomeScreen extends StatelessWidget {
           } else if (state is NoteErrorState) {
             return Center(child: Text(state.message));
           } else {
-            return Center(child: Text('${state} state'));
+            return const Center(child: Text('state'));
           }
         },
       ),
@@ -93,7 +107,7 @@ class HomeScreen extends StatelessWidget {
             MaterialPageRoute(builder: (context) => AddScreen()),
           );
         },
-        child: Icon(Icons.add, color: Colors.black),
+        child:const Icon(Icons.add, color: Colors.black),
       ),
     );
   }

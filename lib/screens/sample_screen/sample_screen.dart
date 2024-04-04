@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_default_project/utils/colors/app_colors.dart';
 import '../../../bloc/note_bloc.dart';
 import '../../../bloc/note_event.dart';
 import '../../../data/models/note_model.dart';
 
 class AddScreen extends StatefulWidget {
+  const AddScreen({super.key});
+
   @override
   _AddScreenState createState() => _AddScreenState();
 }
@@ -15,8 +18,11 @@ class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.c_7C7C7C,
       appBar: AppBar(
-        title: Text('Add Note'),
+        backgroundColor: AppColors.c_7C7C7C,
+        elevation: 0,
+        title: const Text('Add Note'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -25,14 +31,17 @@ class _AddScreenState extends State<AddScreen> {
           children: [
             TextField(
               controller: _textController,
-              decoration: InputDecoration(labelText: 'Enter your note'),
+              decoration: const InputDecoration(labelText: 'Enter your note'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 _addNote();
               },
-              child: Text('Add'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+              ),
+              child: const Text('Add'),
             ),
           ],
         ),

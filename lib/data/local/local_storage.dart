@@ -81,6 +81,7 @@ class LocalDatabase {
       where: 'noteText LIKE ?',
       whereArgs: ["%$query%"],
     );
+    debugPrint("query :$query");
     return json.map((e) => NoteModel.fromJson(e)).toList();
   }
 }

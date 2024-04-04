@@ -12,9 +12,8 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     on<AddNote>(_addNote);
     on<DeleteNote>(_deleteNote);
     on<UpdateNote>(_updateNote);
-
+    on<SearchNote>(_searchNote); // Listen for SearchNote events
     add(GetNotesEvent());
-
 
   }
 
@@ -29,8 +28,6 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to fetch notes'));
     }
-    // add(GetNotesEvent());
-
   }
 
   Future<void> _addNote(
@@ -41,7 +38,7 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     try {
       NoteModel savedNote = await localDatabase.insertNote(event.note);
       add(GetNotesEvent());
-      emit(NoteLoadedState(notes: [savedNote])); // Emitting loaded state with a single note
+      emit(NoteLoadedState(notes: [savedNote]));
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to add note'));
     }
@@ -60,8 +57,6 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to delete note'));
     }
-    // add(GetNotesEvent());
-
   }
 
   Future<void> _updateNote(
@@ -73,10 +68,28 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
       await localDatabase.updateNote(event.updatedNote);
       List<NoteModel> notes = await localDatabase.getAllNotes();
       add(GetNotesEvent());
-      emit(NoteLoadedState(notes: notes)); // Emitting loaded state with all notes
+      emit(NoteLoadedState(notes: notes));
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to update note'));
     }
   }
+  Future<void> _searchNote(
+      SearchNote event,
+      Emitter<NoteState> emit,
+      ) async {
+    emit(NoteLoadingState());
+    try {
+      await localDatabase.searchNotes(event.noteText);
+      List<NoteModel> searchResult =
+      await localDatabase.searchNotes(event.noteText);
+      // add(GetNotesEvent());
+      emit(NoteSearchState(searchResults: searchResult));
+      // Emitting search results directly without emitting NoteLoadedState again
+    } catch (e) {
+      emit(NoteErrorState(message: 'Failed to search notes'));
+    }
+  }
+
+
 
 }

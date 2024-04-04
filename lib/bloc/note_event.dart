@@ -22,3 +22,9 @@ class UpdateNote extends NotesEvent {
 
   UpdateNote({required this.id, required this.updatedNote});
 }
+class SearchNote extends NotesEvent {
+  final String noteText;
+
+
+  SearchNote({required this.noteText,});
+}

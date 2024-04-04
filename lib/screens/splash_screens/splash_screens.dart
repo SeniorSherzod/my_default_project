@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:my_default_project/bloc/note_bloc.dart';
+import 'package:my_default_project/bloc/note_event.dart';
+import 'package:my_default_project/utils/images/app_images.dart';
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Initialize NoteBloc and fetch notes when splash screen is displayed
+    BlocProvider.of<NoteBloc>(context).add(GetNotesEvent());
+
+    return Scaffold(
+      backgroundColor: Colors.white, // Set background color as needed
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Replace the 'animation.json' with your Lottie animation file
+            Lottie.asset(AppImages.lotty),
+            // Add any additional widgets or text below the Lottie animation
+            SizedBox(height: 20),
+            Text(
+              'Note App',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_default_project/data/repository/incomes_repository.dart';
-import 'package:my_default_project/screens/demo_screens/demo_screens.dart';
-import 'package:my_default_project/screens/timer_screen/select_screen.dart';
-
-import '../data/cubits/incomes/incomes_cubit.dart';
-
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:my_default_project/screens/splash_screens/splash_screens.dart';
+import 'package:my_default_project/bloc/note_bloc.dart';
+import '../bloc/note_event.dart';
+import '../data/local/local_storage.dart';
+import '../screens/home_screen/home_screen.dart'; // Import your NoteBloc
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
@@ -13,14 +14,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (_) => IncomeRepository()),
+        RepositoryProvider(create: (_) => LocalDatabase.instance), // Provide LocalDatabase
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => IncomeCubit(
-                incomeRepository: context.read<IncomeRepository>())
-              ..fetchIncome(),
+              create: (context) => NoteBloc(localDatabase: context.read<LocalDatabase>()) // Provide NoteBloc with LocalDatabase
           ),
         ],
         child: const MyApp(),
@@ -28,7 +27,6 @@ class App extends StatelessWidget {
     );
   }
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -37,7 +35,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: false),
-      home: const IncomeScreen(),
+      home: BlocProvider(
+        create: (context) => NoteBloc(localDatabase: context.read<LocalDatabase>()),
+        child: HomeScreen(),
+      ),
+      routes: {
+        '/home': (context) => HomeScreen(),
+      },
     );
   }
 }
+

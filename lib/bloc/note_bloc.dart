@@ -12,6 +12,10 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     on<AddNote>(_addNote);
     on<DeleteNote>(_deleteNote);
     on<UpdateNote>(_updateNote);
+
+    add(GetNotesEvent());
+
+
   }
 
   Future<void> _getNotes(
@@ -25,6 +29,8 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to fetch notes'));
     }
+    // add(GetNotesEvent());
+
   }
 
   Future<void> _addNote(
@@ -34,7 +40,8 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     emit(NoteLoadingState());
     try {
       NoteModel savedNote = await localDatabase.insertNote(event.note);
-      emit(NoteLoadedState(notes: [savedNote]));
+      add(GetNotesEvent());
+      emit(NoteLoadedState(notes: [savedNote])); // Emitting loaded state with a single note
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to add note'));
     }
@@ -46,12 +53,15 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
       ) async {
     emit(NoteLoadingState());
     try {
-      await localDatabase.deleteNote(event.index);
+      await localDatabase.deleteNote(event.id);
       List<NoteModel> notes = await localDatabase.getAllNotes();
+      add(GetNotesEvent());
       emit(NoteDeletedState(notes: notes));
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to delete note'));
     }
+    // add(GetNotesEvent());
+
   }
 
   Future<void> _updateNote(
@@ -62,9 +72,11 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     try {
       await localDatabase.updateNote(event.updatedNote);
       List<NoteModel> notes = await localDatabase.getAllNotes();
-      emit(NoteLoadedState(notes: notes));
+      add(GetNotesEvent());
+      emit(NoteLoadedState(notes: notes)); // Emitting loaded state with all notes
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to update note'));
     }
   }
+
 }

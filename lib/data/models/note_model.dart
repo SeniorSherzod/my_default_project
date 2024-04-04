@@ -29,7 +29,7 @@ class NoteModel {
 
   factory NoteModel.fromJson(Map<String, dynamic> json) {
     return NoteModel(
-      id:json["id"]as int? ?? 0,
+      id:json["noteid"]as int? ?? 0,
       noteText: json['noteText'] as String? ?? "",
       createdDate: DateTime.parse(json['createdDate'] as String? ?? ""),
       noteColor: json['noteColor'] as int? ?? 0,

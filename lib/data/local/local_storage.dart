@@ -57,7 +57,7 @@ class LocalDatabase {
     final db = await database;
     int deletedId = await db.delete(
       'Note',
-      where: 'id = ?',
+      where: 'noteid = ?',
       whereArgs: [id],
     );
     return deletedId;

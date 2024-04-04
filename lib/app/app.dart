@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: false),
       home: BlocProvider(
         create: (context) => NoteBloc(localDatabase: context.read<LocalDatabase>()),
-        child: HomeScreen(),
+        child: SplashScreen(),
       ),
       routes: {
         '/home': (context) => HomeScreen(),

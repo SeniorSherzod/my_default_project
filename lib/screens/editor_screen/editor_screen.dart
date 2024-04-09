@@ -9,13 +9,13 @@ import '../../bloc/note_event.dart';
 class UpdateNoteScreen extends StatefulWidget {
   final NoteModel note;
 
-  const UpdateNoteScreen({Key? key, required this.note}) : super(key: key);
+  const UpdateNoteScreen({super.key, required this.note});
 
   @override
-  _UpdateNoteScreenState createState() => _UpdateNoteScreenState();
+  UpdateNoteScreenState createState() => UpdateNoteScreenState();
 }
 
-class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
+class UpdateNoteScreenState extends State<UpdateNoteScreen> {
   late TextEditingController _textController;
   bool isEditing = false;
 
@@ -31,10 +31,10 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
       backgroundColor: AppColors.c_7C7C7C,
       appBar: AppBar(
         backgroundColor: AppColors.black,
-        title: Text('Update Note'),
+        title: const Text('Update Note'),
         actions: [
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: () {
               setState(() {
                 isEditing = !isEditing;
@@ -51,14 +51,15 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: TextField(
+                  minLines: 10,
                   controller: _textController,
                   maxLines: null, // Allow unlimited lines
                   keyboardType: TextInputType.multiline, // Allow multiline input
-                  decoration: InputDecoration(labelText: 'Enter your note'),
+                  decoration: const InputDecoration(labelText: 'Enter your note'),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 final updatedNote = NoteModel(
@@ -79,7 +80,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
-              child: Text('Update'),
+              child: const Text('Update'),
             ),
           ],
         ),
@@ -91,8 +92,8 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Save Changes?'),
-              content: Text('Do you want to save changes?'),
+              title: const Text('Save Changes?'),
+              content: const Text('Do you want to save changes?'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -101,7 +102,7 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
                       isEditing = false; // Discard changes
                     });
                   },
-                  child: Text('Discard'),
+                  child: const Text('Discard'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -126,14 +127,14 @@ class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                   ),
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
 
               ],
             ),
           );
         },
-        child: Icon(Icons.save),
+        child: const Icon(Icons.save),
       )
           : null,
     );

@@ -9,10 +9,10 @@ class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
 
   @override
-  _AddScreenState createState() => _AddScreenState();
+  AddScreenState createState() => AddScreenState();
 }
 
-class _AddScreenState extends State<AddScreen> {
+class AddScreenState extends State<AddScreen> {
   final TextEditingController _textController = TextEditingController();
 
   @override

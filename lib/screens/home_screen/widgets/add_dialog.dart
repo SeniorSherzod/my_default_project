@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,12 +10,12 @@ void showAddNoteDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) {
-      final TextEditingController _textController = TextEditingController();
+      final TextEditingController textController = TextEditingController();
       return AlertDialog(
         title:const Text('Add Note'),
         content: TextField(
-          controller: _textController,
-          decoration: InputDecoration(labelText: 'Enter your note'),
+          controller: textController,
+          decoration: const InputDecoration(labelText: 'Enter your note'),
         ),
         actions: [
           TextButton(
@@ -27,7 +26,7 @@ void showAddNoteDialog(BuildContext context) {
           ),
           ElevatedButton(
             onPressed: () {
-              final noteText = _textController.text;
+              final noteText = textController.text;
               if (noteText.isNotEmpty) {
                 BlocProvider.of<NoteBloc>(context).add(
                   AddNote(

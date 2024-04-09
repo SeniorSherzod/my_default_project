@@ -3,17 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_default_project/bloc/note_bloc.dart';
 import 'package:my_default_project/bloc/note_state.dart';
 import 'package:my_default_project/data/models/note_model.dart';
-import 'package:my_default_project/screens/home_screen/home_screen.dart';
 import 'package:my_default_project/utils/colors/app_colors.dart';
 
 import '../../bloc/note_event.dart';
 
 class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  SearchScreenState createState() => SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -44,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48.0),
+          preferredSize: const Size.fromHeight(48.0),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: TextField(

@@ -9,7 +9,7 @@ import '../../bloc/note_state.dart';
 import '../../utils/images/app_images.dart'; // Import the HomeScreen
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
           // Notes are loaded, navigate to the home screen
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
           );
         }
       },
@@ -35,7 +35,7 @@ class SplashScreen extends StatelessWidget {
               // Replace the 'animation.json' with your Lottie animation file
               Lottie.asset(AppImages.lotty),
               // Add any additional widgets or text below the Lottie animation
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               const Text(
                 'Note App',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

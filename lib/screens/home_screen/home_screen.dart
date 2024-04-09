@@ -12,7 +12,7 @@ import '../sample_screen/sample_screen.dart';
 import '../search/search_screen.dart'; // Import the AddScreen
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key,});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.black,
       appBar: AppBar(
         backgroundColor: AppColors.black,
-        title:const Text('Notes'),
+        title: const Text('Notes'),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -28,11 +28,10 @@ class HomeScreen extends StatelessWidget {
               // Navigate to the search screen
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SearchScreen()),
+                MaterialPageRoute(builder: (context) => const SearchScreen()),
               );
             },
           ),
-
         ],
       ),
       body: BlocBuilder<NoteBloc, NoteState>(
@@ -56,14 +55,15 @@ class HomeScreen extends StatelessWidget {
                       onDismissed: (direction) {
                         // Implement logic to delete note here
                         BlocProvider.of<NoteBloc>(context)
-                            .add((DeleteNote(id: note.id!)));
+                            .add(DeleteNote(id: note.id!));
                       },
                       child: Container(
                         width: double.infinity,
                         height: 90,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color(note.noteColor)),
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(note.noteColor),
+                        ),
                         child: ListTile(
                           title: Text(state.notes[index].noteText),
                           subtitle: Text(note.createdDate.toString()),
@@ -81,7 +81,6 @@ class HomeScreen extends StatelessWidget {
                             onPressed: () {
                               BlocProvider.of<NoteBloc>(context)
                                   .add(DeleteNote(id: state.notes[index].id!));
-
                             },
                           ),
                         ),
@@ -104,13 +103,11 @@ class HomeScreen extends StatelessWidget {
           // Navigate to AddScreen when FAB is pressed
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddScreen()),
+            MaterialPageRoute(builder: (context) => const AddScreen()),
           );
         },
-        child:const Icon(Icons.add, color: Colors.black),
+        child: const Icon(Icons.add, color: Colors.black),
       ),
     );
   }
 }
-
-

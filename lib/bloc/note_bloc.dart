@@ -24,6 +24,7 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
     emit(NoteLoadingState());
     try {
       List<NoteModel> notes = await localDatabase.getAllNotes();
+      // add(GetNotesEvent());
       emit(NoteLoadedState(notes: notes));
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to fetch notes'));
@@ -82,8 +83,9 @@ class NoteBloc extends Bloc<NotesEvent, NoteState> {
       await localDatabase.searchNotes(event.noteText);
       List<NoteModel> searchResult =
       await localDatabase.searchNotes(event.noteText);
-      // add(GetNotesEvent());
       emit(NoteSearchState(searchResults: searchResult));
+      // add(GetNotesEvent());
+
       // Emitting search results directly without emitting NoteLoadedState again
     } catch (e) {
       emit(NoteErrorState(message: 'Failed to search notes'));

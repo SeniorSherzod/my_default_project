@@ -1,29 +1,56 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:my_default_project/screens/demo_screens/demo_screens.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_nt_ten/blocs/currencies_bloc.dart';
+import 'package:flutter_nt_ten/blocs/currencies_event.dart';
+import 'package:flutter_nt_ten/data/api_provider.dart';
+import 'package:flutter_nt_ten/data/currencies_repo.dart';
+import 'package:flutter_nt_ten/screens/currencies_screen.dart';
 
-import 'data/local/storage_repository.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(App());
+}
 
-class MyHttpOverrides extends HttpOverrides {
+class App extends StatelessWidget {
+  App({super.key});
+
+  ApiProvider apiProvider = ApiProvider();
+
   @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host,
-          int port) => true;
-  }
-
-  Future <void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    StorageRepository();
-    HttpOverrides.global = new MyHttpOverrides();
-    runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: false),
-        home: DemoScreens(),
+  Widget build(BuildContext context) {
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+            create: (_) => CurrenciesRepo(apiProvider: apiProvider)),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+            CurrenciesBloc(currenciesRepo: context.read<CurrenciesRepo>())
+              ..add(GetCurrenciesEvent()),
+          )
+        ],
+        child: const MyApp(),
       ),
     );
   }
+}
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: false),
+      home: CurrenciesScreen(),
+    );
+  }
 }

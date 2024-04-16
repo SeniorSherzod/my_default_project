@@ -1,51 +1,86 @@
 import 'dart:convert';
-import 'package:http/http.dart'as http;
-import '../../utils/constants/app_constants.dart';
-import '../models/categories/categories.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../models/card_model.dart';
 import '../models/network_responce.dart';
-import '../models/product/product.dart';
+import 'api_client.dart';
 
-class ApiProvider {
-  static Future<NetworkResponse> fetchProductModel(int id) async {
-    NetworkResponse networkResponse = NetworkResponse();
+class ApiProvider extends ApiClient {
+  Future<NetworkResponse> getCards() async {
     try {
-      http.Response response = await http
-          .get(Uri.parse("${AppConstants.singleUserApi}$id"));
-
+      Response response = await dio.get("/api/v1/cards");
       if (response.statusCode == 200) {
-        networkResponse.data = (jsonDecode(response.body) as List?)
-            ?.map((e) => ProductModel.fromJson(e))
+        List<CardModel> cards = (response.data["items"] as List?)
+            ?.map((e) => CardModel.fromJson(e))
             .toList() ??
             [];
-      } else {
-        networkResponse.errorText = "Internal error";
+        return NetworkResponse(data: cards);
       }
     } catch (error) {
-      networkResponse.errorText = error.toString();
+      debugPrint("ERROR:$error");
+      return NetworkResponse(errorText: error.toString());
     }
-
-    return networkResponse;
+    return NetworkResponse(errorText: "OTHER ERROR");
   }
-  static Future<NetworkResponse> fetchCategoriesModel() async {
-    NetworkResponse networkResponse = NetworkResponse();
-    try {
-      http.Response response = await http
-          .get(Uri.parse(AppConstants.baseUserApi));
 
-      if (response.statusCode == 200) {
-        networkResponse.data = (jsonDecode(response.body) as List?)
-            ?.map((e) => CategoriesModel.fromJson(e))
+  Future<NetworkResponse> addCard(CardModel cardModel) async {
+    try {
+      Response response = await dio.post("/api/v1/cards",
+          data: jsonEncode([cardModel.toJson()]));
+      if (response.statusCode == 201) {
+        List<CardModel> cards = (response.data["items"] as List?)
+            ?.map((e) => CardModel.fromJson(e))
             .toList() ??
             [];
-      } else {
-        networkResponse.errorText = "Internal error";
+        cards.isNotEmpty
+            ? NetworkResponse(data: cards[0])
+            : NetworkResponse(errorText: "ERROR");
       }
     } catch (error) {
-      networkResponse.errorText = error.toString();
+      debugPrint("ERROR:$error");
+      return NetworkResponse(errorText: error.toString());
     }
+    return NetworkResponse(errorText: "OTHER ERROR");
+  }
 
-    return networkResponse;
+  Future<NetworkResponse> updateCard(CardModel cardModel) async {
+    try {
+      Response response = await dio.put("/api/v1/cards/${cardModel.uuid}",
+          data: jsonEncode(cardModel.toJsonForUpdate()));
+      if (response.statusCode == 200) {
+        // If the update was successful, return the updated card
+        return NetworkResponse(data: CardModel.fromJson(response.data));
+      } else {
+        // Handle other status codes as needed
+        return NetworkResponse(errorText: "ERROR: Failed to update card");
+      }
+    } catch (error) {
+      debugPrint("ERROR:$error");
+      return NetworkResponse(errorText: error.toString());
+    }
   }
 
 
+  Future<NetworkResponse> deleteCard(String id) async {
+    try {
+      Response response = await dio.put(
+        "/api/v1/cards",
+        data: jsonEncode(
+          [
+            {
+              "_uuid": id,
+            }
+          ],
+        ),
+      );
+      if (response.statusCode == 200) {
+        return NetworkResponse(data: "deleted");
+      }
+    } catch (error) {
+      debugPrint("ERROR:$error");
+      return NetworkResponse(errorText: error.toString());
+    }
+    return NetworkResponse(errorText: "OTHER ERROR");
+  }
 }

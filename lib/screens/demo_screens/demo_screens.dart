@@ -1,77 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_default_project/data/models/transactions_model.dart';
-import 'package:my_default_project/utils/colors/app_colors.dart';
+import 'package:my_default_project/screens/demo_screens/widgets/search_delegate.dart';
+import 'package:my_default_project/utils/styles/app_text_style.dart';
 
-import '../../data/cubits/incomes/incomes_cubit.dart';
-import '../../data/cubits/incomes/incomes_state.dart';
-import '../../data/models/incomes_model.dart';
-import '../timer_screen/select_screen.dart';
+import '../../bloc/countries_bloc.dart';
+import '../../bloc/countries_state.dart';
+import '../../bloc/country_event.dart';
+import '../../data/models/country_model.dart';
+import '../../utils/colors/app_colors.dart';
 
-class IncomeScreen extends StatelessWidget {
-  const IncomeScreen({Key? key});
+class CountriesScreen extends StatelessWidget {
+  const CountriesScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
-        title: const Text("Incomes"),
+        title: const Text("COUNTRIES"),
         actions: [
-          IconButton(onPressed: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SelectType(),
+          PopupMenuButton<String>(
+            onSelected: (selectedOption) {
+              if (selectedOption == 'All') {
+                context.read<CountriesBloc>().add(FetchCountries());
+              }
+              else if (selectedOption.length == 2) {
+                context.read<CountriesBloc>().add(
+                  FetchCountriesByContinent(selectedOption.toUpperCase()),
+                );
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'All',
+                child: Text('All Countries'),
               ),
-            );
-          },
-              icon: Icon(Icons.arrow_forward))
+              // Add continent options with valid codes
+              const PopupMenuItem<String>(
+                value: 'EU',
+                child: Text('Europe'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'NA',
+                child: Text('North America'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'SA',
+                child: Text('South America'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'AF',
+                child: Text('Africa'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'AS',
+                child: Text('Asia'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'OC',
+                child: Text('Oceania'),
+              ),
+            ],
+          ),
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CountrySearchDelegate(context.read<CountriesBloc>().state.countries),
+              );
+            },
+            icon: Icon(Icons.search),
+          ),
         ],
       ),
-      body: BlocBuilder<IncomeCubit, IncomeState>(
+      body: BlocBuilder<CountriesBloc, CountriesState>(
         builder: (context, state) {
-          if (state is IncomeLoadingState) {
+          if (state is CountriesLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is IncomesErrorState) {
-            return Center(
-              child: Text(state.errorText),
-            );
-          } else if (state is IncomeSuccessState) {
-            return ListView.builder(
-              itemCount: state.income.length,
-              itemBuilder: (context, index) {
-                TransactionModel transactionModel = state.income[index];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (var transaction in transactionModel.transfersData)
-                      ListTile(
-                        leading: SizedBox(
-                          width: 40,
-                          child: Image.network(transaction.sender.brandImage),
-                        ),
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Transaction Code: ${transaction.transactionCode}'),
-                            Text('Date: ${transaction.date}'),
-                            Text('Income ID: ${transaction.incomeId}'),
-                            Text('Amount: ${transaction.amount}'),
-                            Text('Card ID: ${transaction.cardId}'),
-                            Text('Sender Name: ${transaction.sender.name}'),
-                            Text('Sender Location: ${transaction.sender.location}'),
-                          ],
-                        ),
-                      ),
-                    Divider(color: AppColors.black,height: 2,), // Add a divider between each group of transactions
-                  ],
-                );
-              },
-            );
           }
+          if (state is CountriesError) {
+            return Center(child: Text(state.errorMessage));
+          }
+
+          if (state is CountriesSuccess) {
+            return _buildCountriesList(context, state.countries);
+          }
+
           return const SizedBox();
         },
       ),
+    );
+  }
+
+  Widget _buildCountriesList(BuildContext context, List<CountryModel> countries) {
+    if (countries.isEmpty) {
+      return const Center(child: Text('No countries found')); // Or display a placeholder message
+    }
+    return ListView.builder(
+      itemCount: countries.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading:Text("+${countries[index].phone}",style: AppTextStyle.GilroyMedium.copyWith(fontSize: 25,fontWeight: FontWeight.w200),),
+          title: Text(countries[index].name),
+          trailing: Text(countries[index].emoji,style: AppTextStyle.GilroyMedium.copyWith(fontSize: 30),),
+          subtitle: Text(countries[index].continentName),
+        );
+      },
     );
   }
 }

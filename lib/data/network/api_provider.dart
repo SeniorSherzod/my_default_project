@@ -8,8 +8,8 @@ class ApiClient {
   ApiClient({required this.graphQLClient});
 
   factory ApiClient.create() {
-    final _httpLink = HttpLink('https://countries.trevorblades.com');
-    final link = Link.from([_httpLink]);
+    final httpLink = HttpLink('https://countries.trevorblades.com');
+    final link = Link.from([httpLink]);
     return ApiClient(
       graphQLClient: GraphQLClient(
         link: link,
@@ -39,7 +39,7 @@ class ApiClient {
       }
     } catch (error) {
       debugPrint("ERROR: $error");
-      return NetworkResponse(); // Or provide a default error response with more context
+      return NetworkResponse();
     }
   }
 
@@ -51,7 +51,7 @@ class ApiClient {
 
       if (result.hasException) {
         return NetworkResponse(
-            errorText: extractErrorDetails(result.exception! as GraphQLError)); // Extract specific error details
+            errorText: extractErrorDetails(result.exception! as GraphQLError));
       } else {
         final countries = (result.data?['countries'] as List?)
             ?.map((dynamic e) => CountryModel.fromJson(e as Map<String, dynamic>))
@@ -62,14 +62,11 @@ class ApiClient {
       }
     } catch (error) {
       debugPrint("ERROR: $error");
-      return NetworkResponse(); // Or provide a default error response with more context
+      return NetworkResponse();
     }
   }
 
-  // Function to extract specific error details from GraphQL exceptions (optional)
   String extractErrorDetails(GraphQLError exception) {
-    // Implement logic to extract specific error messages or codes from the exception
-    // For example: return exception.graphqlErrors.first.message;
-    return "An error occurred"; // Placeholder until specific details are extracted
+    return "An error occurred";
   }
 }

@@ -73,21 +73,26 @@ class CountriesScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<CountriesBloc, CountriesState>(
-        builder: (context, state) {
-          if (state is CountriesLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is CountriesError) {
-            return Center(child: Text(state.errorMessage));
-          }
+      body: Column(
+        children: [
+          BlocBuilder<CountriesBloc, CountriesState>(
+            builder: (context, state) {
+              if (state is CountriesLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (state is CountriesError) {
+                return Center(child: Text(state.errorMessage));
+              }
 
-          if (state is CountriesSuccess) {
-            return _buildCountriesList(context, state.countries);
-          }
+              if (state is CountriesSuccess) {
+                return _buildCountriesList(context, state.countries);
+              }
 
-          return const SizedBox();
-        },
+              return const SizedBox();
+            },
+          ),
+          
+        ],
       ),
     );
   }

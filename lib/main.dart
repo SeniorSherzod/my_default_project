@@ -15,7 +15,7 @@ class GuessWordGame extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PinPutScreen(),
+      home: Puzzlegame(),
     );
   }
 }

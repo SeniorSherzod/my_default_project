@@ -1,135 +1,77 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_default_project/utils/colors/app_colors.dart';
-import 'package:my_default_project/utils/images/app_images.dart';
-import 'package:pinput/pinput.dart';
+
 import 'guess_screens/word_controller.dart';
 
-class PinPutScreen extends StatelessWidget {
-  final GuessWordController controller = Get.put(GuessWordController());
-
-  PinPutScreen({Key? key}) : super(key: key);
+class Puzzlegame extends StatelessWidget {
+  final puzzleController = Get.put(PuzzleController());
 
   @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 32,
-      height: 32,
-      textStyle: const TextStyle(
-        fontSize: 20,
-        color: Color.fromRGBO(30, 60, 87, 1),
-        fontWeight: FontWeight.w600,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.deepOrangeAccent),
-      ),
-    );
-
-    final focusedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration?.copyWith(
-        border: Border.all(color: Colors.green),
-        shape: BoxShape.circle,
-      ),
-    );
-
-    final submittedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration?.copyWith(
-        color: const Color.fromRGBO(234, 239, 243, 1),
-      ),
-    );
-
-    return Scaffold(
-      backgroundColor: Colors.grey,
-      body: Stack(
-        children: [
-          Image.asset(AppImages.nature, width: double.infinity, height: MediaQuery.of(context).size.height, fit: BoxFit.cover),
-          Positioned(
-            top: 220,
-            left: 20,
-            right: 20,
-            child: Obx(() {
-              if (controller.enteredWord.value.isEmpty) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      controller.currentQuestion.value,
-                      style: TextStyle(fontSize: 22.0, color: AppColors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                );
-              }
-
-              return SizedBox();
-            }),
-          ),
-          Positioned(
-            top: 460,
-            left: 15,
-            right: 15,
-            child: Column(
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('15 Puzzle'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: puzzleController.shuffle,
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            Obx(() => Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Obx(() {
-                  return Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [
-                      for (final letter in controller.targetWord.value.split('')..shuffle())
-                        ElevatedButton(
-                          onPressed: () {
-                            controller.addToEnteredWord(letter);
-                          },
-                          child: Text(letter.toUpperCase()),
-                        ),
-                    ],
-                  );
-                }),
-                SizedBox(height: 20),
-                Obx(() {
-                  return Pinput(
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: focusedPinTheme,
-                    submittedPinTheme: submittedPinTheme,
-                    length: controller.targetWord.value.length,
-                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                    showCursor: true,
-                    controller: TextEditingController(text: controller.enteredWord.value),
-                    keyboardType: TextInputType.text,
-                  );
-                }),
-
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.generateQuestion();
-                      },
-                      child: Text('Next Question'),
-                    ),
-                    SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.checkAnswer();
-                      },
-                      child: Text('Ckeck Result'),
-                    ),
-
-
-
-                  ],
-                ),
+                Text('Time: '),
+                Text(puzzleController.getFormattedTime()),
               ],
+            )),
+
+            GridView.count(
+              crossAxisCount: 4,
+              children: List.generate(16, (index) {
+                return GestureDetector(
+                  onTap: () => puzzleController.moveTile(index),
+                  child: Container(
+                    margin: EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: puzzleController.tiles[index] == 0
+                          ? Colors.transparent
+                          : Colors.primaries[index % Colors.primaries.length],
+                    ),
+                    child: Text(
+                      puzzleController.tiles[index] == 0
+                          ? ''
+                          : puzzleController.tiles[index].toString(),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                );
+              }),
             ),
-          ),
-        ],
+            Obx(() => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Time: '),
+                Text(puzzleController.getFormattedTime()), // Replace this line
+                Text(puzzleController.movementCount.value.toString()), // with this line
+              ],
+            )),
+
+            Obx(() => puzzleController.isSolved()
+                ? ElevatedButton(
+              onPressed: puzzleController.showWinDialog,
+              child: Text('You Win!'),
+            )
+                : SizedBox()),
+          ],
+        ),
       ),
     );
   }
 }
+
+

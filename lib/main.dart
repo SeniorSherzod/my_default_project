@@ -1,29 +1,25 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_default_project/screens/demo_screens/demo_screens.dart';
+import 'package:my_default_project/screens/puzzle_screen.dart';
+import 'package:shimmer/main.dart';
 
-import 'data/local/storage_repository.dart';
+void main() {
+  runApp(const MyApp());
+}
 
-class MyHttpOverrides extends HttpOverrides {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host,
-          int port) => true;
-  }
-
-  Future <void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    StorageRepository();
-    HttpOverrides.global = new MyHttpOverrides();
-    runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: false),
-        home: DemoScreens(),
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Guess the Word',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: PuzzleScreen(),
     );
   }
-
 }

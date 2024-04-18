@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_default_project/screens/pin_put_screen.dart';
+import 'package:my_default_project/screens/puzzle_screen.dart';
 
 void main() {
   runApp(GuessWordGame());
@@ -13,9 +13,9 @@ class GuessWordGame extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Guess the Word',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: Puzzlegame(),
+      home: PuzzleScreen(),
     );
   }
 }

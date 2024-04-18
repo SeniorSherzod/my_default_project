@@ -8,6 +8,8 @@ class AppImages {
 //.svg
   static const String back = "assets/icons/back.svg";
   static const String basket = "assets/icons/basket.svg";
+  static const String lottie = "assets/lottie/win.json";
+  static const String track = "audio/track.mp3";
 
 //.jpg
 

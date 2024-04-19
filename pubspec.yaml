@@ -42,10 +42,15 @@ dependencies:
   get: ^4.6.6
   shimmer: ^3.0.0
   pinput: ^4.0.0
+  flutter_bloc: ^8.1.5
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

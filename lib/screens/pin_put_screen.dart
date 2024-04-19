@@ -1,135 +1,67 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:my_default_project/utils/colors/app_colors.dart';
-import 'package:my_default_project/utils/images/app_images.dart';
-import 'package:pinput/pinput.dart';
-import 'guess_screens/word_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_default_project/bloc/quiz_bloc.dart';
+import 'package:my_default_project/bloc/quiz_event.dart';
+import 'package:my_default_project/bloc/quiz_state.dart';
+import 'package:my_default_project/screens/guess_screens/word_controller.dart';
 
-class PinPutScreen extends StatelessWidget {
-  final GuessWordController controller = Get.put(GuessWordController());
+// class WordGuessScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Guess the Word'),
+//       ),
+//       body: BlocProvider(
+//         create: (context) => WordGuessBloc().add(LoadQuestionEvent()),
+//         // Provide your WordGuessBloc instance here
+//         child: GuessWordInput(),
+//       ),
+//     );
+//   }
+// }
 
-  PinPutScreen({Key? key}) : super(key: key);
-
+class GuessWordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 32,
-      height: 32,
-      textStyle: const TextStyle(
-        fontSize: 20,
-        color: Color.fromRGBO(30, 60, 87, 1),
-        fontWeight: FontWeight.w600,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.deepOrangeAccent),
-      ),
-    );
-
-    final focusedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration?.copyWith(
-        border: Border.all(color: Colors.green),
-        shape: BoxShape.circle,
-      ),
-    );
-
-    final submittedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration?.copyWith(
-        color: const Color.fromRGBO(234, 239, 243, 1),
-      ),
-    );
-
-    return Scaffold(
-      backgroundColor: Colors.grey,
-      body: Stack(
-        children: [
-          Image.asset(AppImages.nature, width: double.infinity, height: MediaQuery.of(context).size.height, fit: BoxFit.cover),
-          Positioned(
-            top: 220,
-            left: 20,
-            right: 20,
-            child: Obx(() {
-              if (controller.enteredWord.value.isEmpty) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      controller.currentQuestion.value,
-                      style: TextStyle(fontSize: 22.0, color: AppColors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                );
-              }
-
-              return SizedBox();
-            }),
-          ),
-          Positioned(
-            top: 460,
-            left: 15,
-            right: 15,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Obx(() {
-                  return Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [
-                      for (final letter in controller.targetWord.value.split('')..shuffle())
-                        ElevatedButton(
-                          onPressed: () {
-                            controller.addToEnteredWord(letter);
-                          },
-                          child: Text(letter.toUpperCase()),
-                        ),
-                    ],
-                  );
-                }),
-                SizedBox(height: 20),
-                Obx(() {
-                  return Pinput(
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: focusedPinTheme,
-                    submittedPinTheme: submittedPinTheme,
-                    length: controller.targetWord.value.length,
-                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                    showCursor: true,
-                    controller: TextEditingController(text: controller.enteredWord.value),
-                    keyboardType: TextInputType.text,
-                  );
-                }),
-
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.generateQuestion();
-                      },
-                      child: Text('Next Question'),
-                    ),
-                    SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.checkAnswer();
-                      },
-                      child: Text('Ckeck Result'),
-                    ),
-
-
-
-                  ],
+    return BlocBuilder<WordGuessBloc, GuessWordState>(
+      builder: (context, state) {
+        if (state is QuestionLoaded) {
+          return Column(
+            children: [
+              Text(state.questions.length.toString()),
+              SizedBox(height: 20),
+              Text('Attempts left: ${state.attempts}'),
+              SizedBox(height: 20),
+              TextField(
+                onChanged: (value) {
+                  // Dispatch AddLetterEvent with the entered letter
+                  context.read<WordGuessBloc>().add(AddLetterEvent(value));
+                },
+                decoration: InputDecoration(
+                  hintText: 'Enter a letter',
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Dispatch SubmitAnswerEvent
+                  context.read<WordGuessBloc>().add(SubmitAnswerEvent());
+                },
+                child: Text('Submit'),
+              ),
+            ],
+          );
+        } else if (state is AnswerCorrect) {
+          return Center(
+            child: Text('Congratulations! You guessed it right!'),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }

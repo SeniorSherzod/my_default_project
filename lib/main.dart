@@ -1,29 +1,25 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:my_default_project/screens/demo_screens/demo_screens.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_default_project/screens/tab_box/tab_box.dart';
 
-import 'data/local/storage_repository.dart';
+import 'bloc/qr_bloc.dart';
 
-class MyHttpOverrides extends HttpOverrides {
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
   @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host,
-          int port) => true;
-  }
-
-  Future <void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    StorageRepository();
-    HttpOverrides.global = new MyHttpOverrides();
-    runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: false),
-        home: DemoScreens(),
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => QRScannerBloc(), // Provide the QRScannerBloc
+      child: MaterialApp(
+        title: 'My App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+      home: BottomNavigatorScreen(),
       ),
     );
   }
-
 }

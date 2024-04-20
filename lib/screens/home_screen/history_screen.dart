@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_default_project/data/local/local_database.dart';
+import 'package:my_default_project/utils/styles/app_text_style.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../data/models/qr_code_models.dart';
@@ -50,8 +51,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
             //     size: 48.0,
             //   ),
             // ),
-            title: Text(historyItem.qrCode),
-            subtitle: Text(historyItem.scanTime.toIso8601String()),
+            title: Text(historyItem.qrCode,style: AppTextStyle.GilroyMedium.copyWith(color: Colors.white,fontSize: 20),),
+            subtitle: Text(historyItem.scanTime.toIso8601String(),style: AppTextStyle.GilroyMedium.copyWith(color: Colors.white,fontSize: 20),),
             onTap: () {
               // Implement navigation to details screen or any other action
             },

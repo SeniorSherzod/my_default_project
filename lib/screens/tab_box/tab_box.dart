@@ -43,7 +43,7 @@ class _BottomNavigatorScreenState extends State<BottomNavigatorScreen> {
         type: BottomNavigationBarType.fixed,
         selectedFontSize: 16,
         unselectedFontSize: 14,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor:Colors.black38,
         items:  [
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(AppImages.generate, color: Theme.of(context).colorScheme.onSurface),

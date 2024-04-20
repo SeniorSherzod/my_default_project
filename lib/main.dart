@@ -14,8 +14,11 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => QRScannerBloc(), // Provide the QRScannerBloc
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'My App',
         theme: ThemeData(
+          appBarTheme: AppBarTheme(backgroundColor: Colors.black12),
+          scaffoldBackgroundColor: Colors.black12,
           primarySwatch: Colors.blue,
         ),
       home: BottomNavigatorScreen(),

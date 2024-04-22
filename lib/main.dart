@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_default_project/bloc/quiz_bloc.dart';
 import 'package:my_default_project/bloc/quiz_event.dart';
+import 'package:my_default_project/screens/guess_screens/splash_screen.dart';
+import 'package:my_default_project/screens/guess_screens/word_controller.dart';
 import 'package:my_default_project/screens/pin_put_screen.dart';
 
 void main() {
@@ -16,8 +18,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => WordGuessBloc()..add(LoadQuestionEvent()),
+          create: (_) => WordGuessBloc()..add(LoadQuestionEvent(1)),
+          child: WordGameContent(),
         ),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -25,7 +29,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: GuessWordInput(), // Access QuizBloc through context
+        home: SplashScreen(), // Access QuizBloc through context
       ),
     );
   }

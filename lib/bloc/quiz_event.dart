@@ -1,6 +1,7 @@
+
 import 'package:equatable/equatable.dart';
 
-abstract class GuessWordEvent extends Equatable {
+class GuessWordEvent extends Equatable {
   const GuessWordEvent();
 
   @override
@@ -8,7 +9,12 @@ abstract class GuessWordEvent extends Equatable {
 }
 
 class LoadQuestionEvent extends GuessWordEvent {
-  List<Object?> get props => [];
+  final int index;
+
+  LoadQuestionEvent(this.index);
+
+  @override
+  List<Object?> get props => [index];
 }
 
 class AddLetterEvent extends GuessWordEvent {

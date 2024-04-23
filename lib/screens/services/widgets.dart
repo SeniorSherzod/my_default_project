@@ -16,7 +16,7 @@ class WidgetSaverService {
     required BuildContext context,
     required GlobalKey widgetKey,
     required String fileId,
-    required PrettyQr bytes,
+    required PrettyQr bytes, required String url,
   }) async {
     String filePath = '';
 

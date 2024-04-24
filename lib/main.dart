@@ -6,10 +6,10 @@ import 'package:my_default_project/services/file_manager_service.dart';
 
 import 'data/repository/file_repository.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
-  FileManagerService();
+ await FileManagerService.init();
 
   runApp(MyApp());
 }

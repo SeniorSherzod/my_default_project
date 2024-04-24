@@ -39,6 +39,9 @@ class FileManagerScreen extends StatelessWidget {
                   return Column(
                     children: [
                       ListTile(
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(fileDataModel.iconPath)),
                         title: Text(fileDataModel.fileName),
                         subtitle: Text(fileDataModel.fileUrl),
                         trailing: IconButton(

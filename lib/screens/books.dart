@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../bloc/file_manager_bloc.dart';
 import '../data/models/file_data_model.dart';
-import '../data/repository/file_repository.dart';
+import 'books_search.dart';
 
 class BooksScreen extends StatelessWidget {
   @override
@@ -12,6 +11,15 @@ class BooksScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Books'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              final FileManagerState state = context.read<FileManagerBloc>().state;
+              showSearch(context: context, delegate: BookSearchDelegate(allBooks: state.books));
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<FileManagerBloc, FileManagerState>(
         builder: (context, state) {
@@ -37,8 +45,8 @@ class BooksScreen extends StatelessWidget {
       child: BlocBuilder<FileManagerBloc, FileManagerState>(
         builder: (context, state) {
           return DropdownButton<String>(
-            value: 'All', 
-            items: ['All', 'Science', 'poem', 'roman', 'action', 'qissa', 'tarix']
+            value: 'All',
+            items: ['All', 'Science', 'Poem', 'Roman', 'Action', 'Qissa', 'Tarix']
                 .map<DropdownMenuItem<String>>(
                   (genre) => DropdownMenuItem<String>(
                 value: genre,
@@ -68,7 +76,7 @@ class BooksScreen extends StatelessWidget {
           builder: (BuildContext context) {
             return GestureDetector(
               onTap: () {
-
+                // Handle book tap
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -95,5 +103,3 @@ class BooksScreen extends StatelessWidget {
     );
   }
 }
-
-

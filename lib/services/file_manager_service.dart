@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -7,28 +9,34 @@ import '../data/models/file_data_model.dart';
 import '../data/models/file_data_status.dart';
 
 class FileManagerService {
-  static final FileManagerService instance = FileManagerService._();
+  static Directory? directory;
 
-  FileManagerService._() {
-    _init();
-  }
+  static List<String> allFilePaths = [];
 
-  factory FileManagerService() => instance;
-
-  Directory? directory;
-
-  _init() async {
-    bool hasPermission = await _requestWritePermission();
+  static Future<void> init() async {
+    bool hasPermission = await requestWritePermission();
     if (!hasPermission) return;
+
+    debugPrint("STORAGE PERMISSION GRANTED");
+
     directory = await getDownloadPath();
+
+    allFilePaths = await getDirectoryPaths(directory);
   }
 
-  Future<bool> _requestWritePermission() async {
+  static Future<bool> requestWritePermission() async {
+    final info = await DeviceInfoPlugin().androidInfo;
+    if (Platform.isAndroid && info.version.sdkInt > 29) {
+      await Permission.manageExternalStorage.request();
+    } else {
+      await Permission.storage.request();
+    }
+
     await Permission.storage.request();
     return await Permission.storage.request().isGranted;
   }
 
-  Future<Directory?> getDownloadPath() async {
+  static Future<Directory?> getDownloadPath() async {
     Directory? directory;
     try {
       if (Platform.isIOS) {
@@ -45,39 +53,56 @@ class FileManagerService {
     return directory;
   }
 
-  Future<FileStatusModel> checkFile(FileDataModel fileDataModel) async {
-    await _init();
+  static Future<FileStatusModel> checkFile(FileDataModel fileDataModel) async {
     FileStatusModel fileStatusModel = FileStatusModel(
       isExist: false,
       newFileLocation: "",
     );
-    //Check for url validation
 
     String savedLocation = '';
 
     List<String> pattern = fileDataModel.fileUrl.split(".");
     if (pattern.length > 1) {
       savedLocation =
-      "${directory?.path}/${fileDataModel.fileName}.${pattern.last}";
+      "${directory != null ? directory!.path : "/storage/emulated/0/Download"}/${fileDataModel.fileName}.${pattern.last}";
     }
     fileStatusModel = fileStatusModel.copyWith(newFileLocation: savedLocation);
 
-    var allFiles = directory?.list();
-
-    List<String> filePaths = [];
-
-    await allFiles?.forEach((element) {
-      debugPrint("FILES IN DOWNLOAD FOLDER:${element.path}");
-      filePaths.add(element.path.toString());
-    });
+    List<String> filePaths = await getDirectoryPaths(directory);
 
     if (filePaths.contains(savedLocation)) {
       fileStatusModel = fileStatusModel.copyWith(isExist: true);
     }
 
-    debugPrint(
-        "FINAL FILE STATE:${fileStatusModel.newFileLocation} AND STAT:${fileStatusModel.isExist}");
+    // debugPrint("FINAL FILE STATE:${fileStatusModel.newFileLocation} AND STAT:${fileStatusModel.isExist}");
 
     return fileStatusModel;
+  }
+
+  static String isExist(
+      String fileUrl,
+      String fileName,
+      ) {
+    String filePath = '';
+    List<String> pattern = fileUrl.split(".");
+    if (pattern.length > 1) {
+      filePath =
+      "${directory != null ? directory!.path : "/storage/emulated/0/Download"}/$fileName.${pattern.last}";
+    }
+    if (allFilePaths.contains(filePath)) {
+      return filePath;
+    }
+    return "";
+  }
+
+  static Future<List<String>> getDirectoryPaths(Directory? directory) async {
+    List<String> filePaths = [];
+    if (directory == null) return filePaths;
+    var allFiles = directory.list();
+    await allFiles.forEach((element) {
+      debugPrint("FILES IN DOWNLOAD FOLDER:${element.path}");
+      filePaths.add(element.path.toString());
+    });
+    return filePaths;
   }
 }

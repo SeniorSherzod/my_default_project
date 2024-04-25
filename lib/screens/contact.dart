@@ -32,13 +32,17 @@ class ContactScreens extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: SvgPicture.asset(AppImages.us),
+              trailing: SizedBox(width:30,child: SvgPicture.asset(AppImages.us)),
               title: Text("English",style: AppTextStyle.GilroyMedium.copyWith(fontSize: 25),),
-            ),ListTile(
-              leading: SvgPicture.asset(AppImages.ru),
+            ),
+            SizedBox(height: 20,),
+            ListTile(
+              trailing: SizedBox(width:30,child: SvgPicture.asset(AppImages.ru)),
               title: Text("Russian",style: AppTextStyle.GilroyMedium.copyWith(fontSize: 25),),
-            ),ListTile(
-              leading: SvgPicture.asset(AppImages.uz),
+            ),
+            SizedBox(height: 20,),
+            ListTile(
+              trailing: SizedBox(width:30,child: SvgPicture.asset(AppImages.uz)),
               title: Text("Uzbek",style: AppTextStyle.GilroyMedium.copyWith(fontSize: 25),),
             ),
           ],

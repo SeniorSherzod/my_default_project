@@ -1,0 +1,62 @@
+import '../models/contact_model.dart';
+import '../models/message_model.dart';
+
+List<ContactModel> allContacts = [
+  ContactModel(
+    contactId: 3,
+    contactLasName: "Alisher",
+    contactName: "Falonchiyev",
+    isOnline: true,
+    imageUrl: "https://a.espncdn.com/i/headshots/mens-college-basketball/players/full/4684734.png",
+    lastOnlineTime: DateTime.now(),
+  ),  ContactModel(
+    contactId: 3,
+    contactLasName: "Jonibek",
+    contactName: "Falonchiyev",
+    isOnline: false,
+    imageUrl: "https://a.espncdn.com/i/headshots/mens-college-basketball/players/full/4684734.png",
+    lastOnlineTime: DateTime.now(),
+  ),  ContactModel(
+    contactId: 3,
+    contactLasName: "Firdavs",
+    contactName: "Falonchiyev",
+    isOnline: false,
+    imageUrl: "https://a.espncdn.com/i/headshots/mens-college-basketball/players/full/4684734.png",
+    lastOnlineTime: DateTime.now(),
+  ),  ContactModel(
+    contactId: 3,
+    contactLasName: "Nazar",
+    contactName: "Falonchiyev",
+    isOnline: true,
+    imageUrl: "https://a.espncdn.com/i/headshots/mens-college-basketball/players/full/4684734.png",
+    lastOnlineTime: DateTime.now(),
+  ),  ContactModel(
+    contactId: 3,
+    contactLasName: "Ali",
+    contactName: "Falonchiyev",
+    isOnline: true,
+    imageUrl: "https://a.espncdn.com/i/headshots/mens-college-basketball/players/full/4684734.png",
+    lastOnlineTime: DateTime.now(),
+  ),  ContactModel(
+    contactId: 3,
+    contactLasName: "Hilola",
+    contactName: "Falonchiyev",
+    isOnline: false,
+    imageUrl: "https://img.freepik.com/free-psd/expressive-woman-gesturing_23-2150198673.jpg",
+    lastOnlineTime: DateTime.now(),
+  ),  ContactModel(
+    contactId: 3,
+    contactLasName: "Lola",
+    contactName: "Falonchiyev",
+    isOnline: true,
+    imageUrl: "https://img.freepik.com/free-psd/expressive-woman-gesturing_23-2150198673.jpg",
+    lastOnlineTime: DateTime.now(),
+  ),  ContactModel(
+    contactId: 3,
+    contactLasName: "Sherzod",
+    contactName: "Falonchiyev",
+    isOnline: true,
+    imageUrl: "https://a.espncdn.com/i/headshots/mens-college-basketball/players/full/4684734.png",
+    lastOnlineTime: DateTime.now(),
+  ),
+];

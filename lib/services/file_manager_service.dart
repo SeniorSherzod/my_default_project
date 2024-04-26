@@ -1,108 +1,49 @@
 import 'dart:io';
+
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart' show TargetPlatform, kIsWeb;
 import 'package:permission_handler/permission_handler.dart';
 
-import '../data/models/file_data_model.dart';
-import '../data/models/file_data_status.dart';
-
 class FileManagerService {
-  static Directory? directory;
-
-  static List<String> allFilePaths = [];
+  static bool _hasWritePermission = false;
 
   static Future<void> init() async {
-    bool hasPermission = await requestWritePermission();
-    if (!hasPermission) return;
-
-    debugPrint("STORAGE PERMISSION GRANTED");
-
-    directory = await getDownloadPath();
-
-    allFilePaths = await getDirectoryPaths(directory);
+    _hasWritePermission = await requestWritePermission();
   }
-
   static Future<bool> requestWritePermission() async {
-    final info = await DeviceInfoPlugin().androidInfo;
-    if (Platform.isAndroid && info.version.sdkInt > 29) {
-      await Permission.manageExternalStorage.request();
-    } else {
-      await Permission.storage.request();
-    }
-
-    await Permission.storage.request();
-    return await Permission.storage.request().isGranted;
-  }
-
-  static Future<Directory?> getDownloadPath() async {
-    Directory? directory;
     try {
-      if (Platform.isIOS) {
-        directory = await getApplicationDocumentsDirectory();
-      } else {
-        directory = Directory('/storage/emulated/0/Download');
-        if (!await directory.exists()) {
-          directory = await getExternalStorageDirectory();
+      late bool hasWritePermission;
+
+      if (!kIsWeb) {
+        if (Platform.isAndroid) {
+          final storageStatus = await Permission.storage.request();
+          hasWritePermission = storageStatus == PermissionStatus.granted;
+        } else if (Platform.isIOS) {
+          hasWritePermission = true;
+        } else {
+          hasWritePermission = true;
         }
+      } else {
+        hasWritePermission = true;
       }
-    } catch (err) {
-      debugPrint("Cannot get download folder path");
+
+      _hasWritePermission = hasWritePermission;
+      return hasWritePermission;
+    } catch (e) {
+      print('Error requesting write permission: $e');
+      return false;
     }
-    return directory;
   }
 
-  static Future<FileStatusModel> checkFile(FileDataModel fileDataModel) async {
-    FileStatusModel fileStatusModel = FileStatusModel(
-      isExist: false,
-      newFileLocation: "",
-    );
 
-    String savedLocation = '';
 
-    List<String> pattern = fileDataModel.fileUrl.split(".");
-    if (pattern.length > 1) {
-      savedLocation =
-      "${directory != null ? directory!.path : "/storage/emulated/0/Download"}/${fileDataModel.fileName}.${pattern.last}";
-    }
-    fileStatusModel = fileStatusModel.copyWith(newFileLocation: savedLocation);
+  static bool get hasWritePermission => _hasWritePermission;
+}
 
-    List<String> filePaths = await getDirectoryPaths(directory);
+void main() async {
+  FileManagerService.init();
 
-    if (filePaths.contains(savedLocation)) {
-      fileStatusModel = fileStatusModel.copyWith(isExist: true);
-    }
+  final hasWritePermission = await FileManagerService.requestWritePermission();
 
-    // debugPrint("FINAL FILE STATE:${fileStatusModel.newFileLocation} AND STAT:${fileStatusModel.isExist}");
-
-    return fileStatusModel;
-  }
-
-  static String isExist(
-      String fileUrl,
-      String fileName,
-      ) {
-    String filePath = '';
-    List<String> pattern = fileUrl.split(".");
-    if (pattern.length > 1) {
-      filePath =
-      "${directory != null ? directory!.path : "/storage/emulated/0/Download"}/$fileName.${pattern.last}";
-    }
-    if (allFilePaths.contains(filePath)) {
-      return filePath;
-    }
-    return "";
-  }
-
-  static Future<List<String>> getDirectoryPaths(Directory? directory) async {
-    List<String> filePaths = [];
-    if (directory == null) return filePaths;
-    var allFiles = directory.list();
-    await allFiles.forEach((element) {
-      debugPrint("FILES IN DOWNLOAD FOLDER:${element.path}");
-      filePaths.add(element.path.toString());
-    });
-    return filePaths;
-  }
+  print('Has write permission: $hasWritePermission');
 }

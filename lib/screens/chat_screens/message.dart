@@ -15,7 +15,7 @@ class MessagesList extends StatelessWidget {
         if (snapshot.hasData) {
           final messages = snapshot.data!.docs; // Access documents directly
           if (messages.isEmpty) {
-            return Center(child: Text('No messages yet'));
+            return const Center(child: Text('No messages yet'));
           } else {
             return ListView.builder(
               reverse: true,
@@ -32,7 +32,7 @@ class MessagesList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );

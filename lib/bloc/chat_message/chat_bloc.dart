@@ -1,9 +1,8 @@
-import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../data/models/message_chat_model/message_chat.dart';
+import '../../data/models/message_model.dart';
 import 'chat_event.dart';
 import 'chat_state.dart';
 
@@ -19,17 +18,31 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           if (user != null && event.messageText.isNotEmpty) {
             emit(state.copyWith(isLoading: true));
             try {
-              await _firestore.collection('messages').add({
-                'text': event.messageText,
-                'sender': user.email,
-                'timestamp': DateTime.now(),
-              });
+              // Create a new instance of MessageModel
+              final message = MessageModel(
+                messageId: 0, // Set messageId as desired
+                messageText: event.messageText,
+                isFile: false, // Assuming this is false for text messages
+                createdTime: DateTime.now().toString(),
+                contactId: 0, // Set contactId as desired
+                status: false, // Set status as desired
+              );
+
+              // Convert MessageModel instance to Map
+              final messageMap = message.toJson();
+
+              // Save message to Firestore
+              await _firestore.collection('messages').add(messageMap);
+
               emit(state.copyWith(isLoading: false));
             } catch (error) {
               emit(state.copyWith(isLoading: false, error: error.toString()));
             }
           }
           break;
+
+
+
         case LoadMessagesEvent:
           emit(state.copyWith(isLoading: true));
           try {

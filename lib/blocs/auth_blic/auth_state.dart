@@ -1,9 +1,8 @@
+// part of 'authentication_bloc.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 
-@immutable
-sealed class AuthState {}
 enum AuthenticationStatus { authenticated, unauthenticated, unknown }
 
 class AuthenticationState extends Equatable {
@@ -20,7 +19,7 @@ class AuthenticationState extends Equatable {
   const AuthenticationState.unknown() : this._();
 
   /// Current user is [authenticated].
-  ///
+  /// 
   /// It takes a [MyUser] property representing the current [authenticated] user.
   const AuthenticationState.authenticated(User user) : this._(status: AuthenticationStatus.authenticated, user: user);
 

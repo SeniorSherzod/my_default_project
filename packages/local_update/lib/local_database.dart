@@ -25,19 +25,25 @@ class LocalDatabase {
   }
 
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'currency1.db');
+    String path = join(await getDatabasesPath(), 'Currencies.db');
     return openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
-        await db.execute('''CREATE TABLE currency1 (
-          id INTEGER PRIMARY KEY,
-          code text,
-          cyNmUZ TEXT,
-          rate TEXT,
-          nominal TEXT
-        )''');
-      },
+      await db.execute('''
+    CREATE TABLE Currencies (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      code TEXT NOT NULL,
+      currencyCode TEXT NOT NULL,
+      cyNmUZ TEXT NOT NULL,
+      cyNmEN TEXT NOT NULL,
+      nominal TEXT NOT NULL,
+      rate TEXT NOT NULL,
+      date TEXT NOT NULL
+    )
+  ''');
+    },
+
     );
   }
 
@@ -45,8 +51,8 @@ class LocalDatabase {
     NetworkResponse networkResponse = NetworkResponse();
     try {
       final db = await LocalDatabase().database;
-      await db.insert("currency1", currencyModel.toJson());
-      networkResponse.data = 'currency1 inserted successfully';
+      await db.insert("Currencies", currencyModel.toJson());
+      networkResponse.data = 'Currencies inserted successfully';
     } catch (error) {
       networkResponse.errorText = "Error during insertion: $error";
     }
@@ -57,7 +63,7 @@ class LocalDatabase {
     NetworkResponse networkResponse = NetworkResponse();
     try {
       final db = await LocalDatabase().database;
-      List<Map<String, dynamic>> json = await db.query("currency1");
+      List<Map<String, dynamic>> json = await db.query("Currencies");
       networkResponse.data = json.map((e) => CurrencyModel.fromJson(e)).toList();
     } catch (error) {
       networkResponse.errorText = "Error during retrieval: $error";
@@ -69,9 +75,9 @@ class LocalDatabase {
     NetworkResponse networkResponse = NetworkResponse();
     try {
       final db = await LocalDatabase().database;
-      await db.update("currency1", currencyModel.toJson(),
+      await db.update("Currencies", currencyModel.toJson(),
           where: "code = ?", whereArgs: [currencyModel.code]);
-      networkResponse.data = 'currency1 updated successfully';
+      networkResponse.data = 'Currencies updated successfully';
     } catch (error) {
       networkResponse.errorText = "Error during update: $error";
     }

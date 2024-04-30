@@ -1,3 +1,5 @@
+import 'package:local_update/currency_model.dart';
+
 import '../../models/currency_mode.dart';
 
 abstract class CurrencyStateMulti {}

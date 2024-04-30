@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_update/currency_model.dart';
 import 'package:my_default_project/screens/multistate_cubit_screen/multi_state_currency_screen.dart';
 import 'package:my_default_project/utils/styles/app_text_style.dart';
 

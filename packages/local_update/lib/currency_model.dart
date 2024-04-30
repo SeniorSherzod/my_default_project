@@ -60,4 +60,13 @@ class CurrencyModel {
       date: date ?? this.date,
     );
   }
+  bool spotTheDifference({required CurrencyModel currencyModel}) {
+    return code != currencyModel.code ||
+        currencyCode != currencyModel.currencyCode ||
+        cyNmUZ != currencyModel.cyNmUZ ||
+        cyNmEN != currencyModel.cyNmEN ||
+        nominal != currencyModel.nominal ||
+        rate != currencyModel.rate ||
+        date != currencyModel.date;
+  }
 }

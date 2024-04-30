@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_update/currency_model.dart';
+import 'package:local_update/network_reponce.dart';
 import 'package:my_default_project/data/cubits/single_cubit/single_currency_cunit.dart';
 import '../../models/currency_mode.dart';
 import '../../models/form_status.dart';

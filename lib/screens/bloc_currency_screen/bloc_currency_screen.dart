@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_update/currency_model.dart';
 
 import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_event.dart';
@@ -15,30 +16,30 @@ class CurrenciesScreenBloc extends StatelessWidget {
       appBar: AppBar(title: const Text("Currencies")),
       body: Column(
         children: [
-          BlocBuilder<CurrencyBloc, CurrencyState>(
+          BlocBuilder<CurrencyBloc, CurrencyStateBloc>(
             buildWhen: (previous, current) {
               return true;
             },
             builder: (context, state) {
-              if (state is CurrencyLoadingState) {
+              if (state is CurrencyLoadingStateBloc) {
                 return const Center(child: CircularProgressIndicator());
               }
-              if (state is CurrencyErrorState) {
+              if (state is CurrencyErrorStateBloc) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(state.errorText),
                   ],
                 );
-              } else if (state is CurrencySuccessState) {
+              } else if (state is CurrencySuccessStateBloc) {
                 return Expanded(
                   child: ListView(
                     children: List.generate(state.currencies.length, (index) {
                       CurrencyModel currencyModel = state.currencies[index];
                       return ListTile(
                         onTap: () {
-                          context.read<CurrencyBloc>().add(DeleteCurrencyEvent(
-                              currencyId: currencyModel.id));
+                          context.read<CurrencyBloc>().add(GetCurrencyEvent(
+                              ));
                         },
                         title: Text(
                             "${currencyModel.nominal} ${currencyModel.cyNmUZ}"),

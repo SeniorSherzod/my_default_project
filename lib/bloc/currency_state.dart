@@ -1,22 +1,21 @@
 
-import '../data/models/currency_mode.dart';
 
-abstract class CurrencyState {}
+import 'package:local_update/currency_model.dart';
 
-class CurrencyInitialState extends CurrencyState {}
+abstract class CurrencyStateBloc {}
 
-class CurrencyLoadingState extends CurrencyState {}
+class CurrencyInitialStateBloc extends CurrencyStateBloc {}
 
-class CurrencySuccessState extends CurrencyState {
-  CurrencySuccessState({required this.currencies});
+class CurrencyLoadingStateBloc extends CurrencyStateBloc {}
+
+class CurrencySuccessStateBloc extends CurrencyStateBloc {
+  CurrencySuccessStateBloc({required this.currencies});
 
   final List<CurrencyModel> currencies;
 }
 
-class CurrencyErrorState extends CurrencyState {
-  CurrencyErrorState({required this.errorText});
+class CurrencyErrorStateBloc extends CurrencyStateBloc {
+  CurrencyErrorStateBloc({required this.errorText});
 
   final String errorText;
 }
-
-class CurrencyDeletedState extends CurrencyState {}

@@ -25,13 +25,14 @@ class LocalDatabase {
   }
 
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'currency.db');
+    String path = join(await getDatabasesPath(), 'currency1.db');
     return openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
-        await db.execute('''CREATE TABLE Currency (
+        await db.execute('''CREATE TABLE currency1 (
           id INTEGER PRIMARY KEY,
+          code text,
           cyNmUZ TEXT,
           rate TEXT,
           nominal TEXT
@@ -44,8 +45,8 @@ class LocalDatabase {
     NetworkResponse networkResponse = NetworkResponse();
     try {
       final db = await LocalDatabase().database;
-      await db.insert("CurrencyTable", currencyModel.toJson());
-      networkResponse.data = 'Currency inserted successfully';
+      await db.insert("currency1", currencyModel.toJson());
+      networkResponse.data = 'currency1 inserted successfully';
     } catch (error) {
       networkResponse.errorText = "Error during insertion: $error";
     }
@@ -56,7 +57,7 @@ class LocalDatabase {
     NetworkResponse networkResponse = NetworkResponse();
     try {
       final db = await LocalDatabase().database;
-      List<Map<String, dynamic>> json = await db.query("CurrencyTable");
+      List<Map<String, dynamic>> json = await db.query("currency1");
       networkResponse.data = json.map((e) => CurrencyModel.fromJson(e)).toList();
     } catch (error) {
       networkResponse.errorText = "Error during retrieval: $error";
@@ -68,9 +69,9 @@ class LocalDatabase {
     NetworkResponse networkResponse = NetworkResponse();
     try {
       final db = await LocalDatabase().database;
-      await db.update("CurrencyTable", currencyModel.toJson(),
+      await db.update("currency1", currencyModel.toJson(),
           where: "code = ?", whereArgs: [currencyModel.code]);
-      networkResponse.data = 'Currency updated successfully';
+      networkResponse.data = 'currency1 updated successfully';
     } catch (error) {
       networkResponse.errorText = "Error during update: $error";
     }

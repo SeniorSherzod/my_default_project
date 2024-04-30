@@ -30,7 +30,7 @@ class App extends StatelessWidget {
               ..fetchCurrencies(),
           ),
           BlocProvider(
-            create: (_) => CurrencyBloc()..add(GetCurrenciesEvent()),
+            create: (_) => CurrencyBloc()..add(GetCurrencyEvent()),
           ),
           BlocProvider(
               create: (_) => ConnectivityBloc()..add(CheckConnectivity())),

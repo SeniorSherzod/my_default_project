@@ -1,9 +1,3 @@
-abstract class CurrencyEvent {}
+abstract class CurrencyEventBloc {}
 
-class GetCurrenciesEvent extends CurrencyEvent {}
-
-class DeleteCurrencyEvent extends CurrencyEvent {
-  final int currencyId;
-
-  DeleteCurrencyEvent({required this.currencyId});
-}
+class GetCurrencyEvent extends CurrencyEventBloc {}

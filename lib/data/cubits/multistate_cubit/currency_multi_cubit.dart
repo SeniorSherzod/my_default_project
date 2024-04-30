@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_update/currency_model.dart';
+import 'package:local_update/network_reponce.dart';
 
 import '../../models/currency_mode.dart';
 import '../../models/network_responce.dart';

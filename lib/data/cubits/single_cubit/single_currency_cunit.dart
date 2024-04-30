@@ -1,5 +1,7 @@
 
 
+import 'package:local_update/currency_model.dart';
+
 import '../../models/currency_mode.dart';
 import '../../models/form_status.dart';
 

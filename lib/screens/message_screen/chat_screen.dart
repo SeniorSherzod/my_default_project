@@ -10,28 +10,16 @@ import '../../blocs/my_user/my_user_bloc.dart';
 import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
 import '../../blocs/update/update_user_info_bloc.dart';
 import '../../blocs/write_chat/create_post_bloc.dart';
-import '../../data/chat/models/post.dart';
 import '../../data/chat/repository/post_repository.dart';
-import '../../data/user/models/my_user_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  // final MyUser myUser;
-  const HomeScreen({super.key, });
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Post post;
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  void initState() {
-    post = Post.empty;
-    // post.myUser = widget.myUser;
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(
@@ -191,8 +179,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         width: double.infinity,
-                        height: 100,
-                        color: Colors.blue,
+                        // height: 400,
+                        // color: Colors.blue,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -251,8 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            else {
+            } else {
               return const Center(
                 child: Text("An error has occured"),
               );

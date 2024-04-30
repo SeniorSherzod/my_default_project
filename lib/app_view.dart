@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_default_project/blocs/chat_message/chat_bloc.dart';
+import 'package:my_default_project/data/network/contact_list.dart';
 import 'package:my_default_project/screens/auth_screen/welcome_screen.dart';
-import 'package:my_default_project/screens/home_screen/home_screen.dart';
+import 'package:my_default_project/screens/contact_screen/contact_screen.dart';
 import 'package:my_default_project/screens/message_screen/chat_screen.dart';
-
+import 'package:my_default_project/screens/message_screen/message_screen.dart';
 import 'blocs/auth_blic/auth_bloc.dart';
 import 'blocs/auth_blic/auth_state.dart';
 import 'blocs/get_chat/get_post_bloc.dart';
@@ -14,6 +16,7 @@ import 'data/chat/repository/post_repository.dart';
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +62,13 @@ class MyAppView extends StatelessWidget {
                       create: (context) => GetPostBloc(
                           postRepository: FirebasePostRepository()
                       )..add(GetPosts())
+                  ),
+                  BlocProvider(
+                      create: (context) => ChatBloc(
+                      )
                   )
                 ],
-                child: const HomeScreen(),
+                child:  HomeScreen()
               );
             } else {
               return const WelcomeScreen();

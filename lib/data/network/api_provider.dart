@@ -1,21 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:my_default_project/data/models/incomes_model.dart';
-import 'package:my_default_project/data/models/network_responce.dart';
 
-import '../models/transactions_model.dart';
+import '../models/currency_mode.dart';
+import '../models/network_responce.dart';
 
 class ApiProvider {
-  static Future<NetworkResponse> getTranfers() async{
+  static Future<NetworkResponse> getCurrencies() async {
     try {
       http.Response response = await http
-          .get(Uri.parse("https://banking-api.free.mockoapp.net/transactions-incomes"));
+          .get(Uri.parse("https://cbu.uz/uz/arkhiv-kursov-valyut/json/"));
 
       if (response.statusCode == HttpStatus.ok) {
         return NetworkResponse(
           data: (jsonDecode(response.body) as List?)
-              ?.map((e) => TransactionModel.fromJson(e))
+              ?.map((e) => CurrencyModel.fromJson(e))
               .toList() ??
               [],
         );

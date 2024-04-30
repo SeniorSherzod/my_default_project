@@ -43,6 +43,12 @@ dependencies:
   flutter_bloc: ^8.1.5
   direct_select_flutter: ^1.1.1
   circular_countdown_timer: ^0.2.3
+  sqflite: ^2.3.3
+  equatable: ^2.0.5
+  connectivity_plus: ^6.0.3
+  local_update:
+    path: packages/local_update
+
 
 dev_dependencies:
   flutter_test:

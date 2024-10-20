@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if(isFirstTime){
         Navigator.pushNamed(context, RouteNames.bottomNavigator);
       }else{
-        Navigator.pushNamed(context, RouteNames.onboardingScreen);
+        Navigator.pushNamed(context, RouteNames.bottomNavigator);
       }
     });
   }
